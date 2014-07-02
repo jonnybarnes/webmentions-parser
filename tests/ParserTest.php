@@ -8,6 +8,6 @@ class ParserTest extends PHPUnit_Framework_TestCase {
 	{
 		$html = 'text';
 		$parser = new Parser();
-		$this->assertEquals('text', $parser->parse($html);
+		$this->assertEquals('text', $parser->parse($html));
 	}
 }
