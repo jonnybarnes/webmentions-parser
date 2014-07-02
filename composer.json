@@ -1,7 +1,7 @@
 {
 	"name": "jonnybarnes/webmentions-parser",
 	"description": "A PHP library to parse webmentions from HTML",
-	"keywords": "indieweb, webmentions, HTML, microformats",
+	"keywords": ["indieweb", "webmentions", "HTML", "microformats"],
 	"licence": "CC0-1.0",
 	"authors": [
 		{
