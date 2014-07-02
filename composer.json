@@ -1,0 +1,26 @@
+{
+	"name": "jonnybarnes/webmentions-parser",
+	"description": "A PHP library to parse webmentions from HTML",
+	"keywords": "indieweb, webmentions, HTML, microformats",
+	"licence": "CC0-1.0",
+	"authors": [
+		{
+			"name": "Jonny Barnes",
+			"homepage": "https://jonnybarnes.net"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/jonnybarnes/webmentions-parser/issues"
+	},
+	"require": {
+		"mf2/mf2": "0.2.*"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "4.1.*"
+	},
+	"autoload": {
+		"psr-4": {
+			"JonnyBarnes\\WebmentionsParser\\": "src"
+		}
+	}
+}
