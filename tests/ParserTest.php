@@ -6,8 +6,20 @@ class ParserTest extends PHPUnit_Framework_TestCase {
 
 	public function testParser()
 	{
-		$html = 'text';
+		$html = '<p class="h-card">Joe Bloggs</p>';
 		$parser = new Parser();
-		$this->assertEquals('text', $parser->parse($html));
+		$mf = $parser->getMicrofromats($html);
+		$expected = <<<'EOD'{
+	"items": [{
+		"type": ["h-card"],
+		"properties": {
+			"name": ["Joe Bloggs"]
+		}
+	}],
+	"rels": {}
+}
+EOD;
+		$this->assertEquals($expected, $parser->getMicroformats($html));
+	}
 	}
 }
