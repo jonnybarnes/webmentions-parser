@@ -1,6 +1,8 @@
 <?php
 
 use JonnyBarnes\WebmentionsParser\Parser;
+use JonnyBarnes\WebmentionsParser\ParsingException;
+use JonnyBarnes\WebmentionsParser\InvalidMentionException;
 
 class ParserTest extends PHPUnit_Framework_TestCase {
 
@@ -66,6 +68,24 @@ class ParserTest extends PHPUnit_Framework_TestCase {
 		$mf = $parser->getMicroformats($html);
 		$expected = 'like-of';
 		$this->assertEquals($expected, $parser->getMentionType($mf));
+	}
+
+	public function testInvalidMentionType()
+	{
+		$html = '<!doctype html>
+<html>
+	<body class="h-entry h-as-invalid">
+		<a class="u-invalid u-invalid-of" href="#"></a>
+	</body>
+</html>';
+		$parser = new Parser();
+		$mf = $parser->getMicroformats($html);
+		try {
+			$type = $parser->getMentionType($mf);
+		} catch(InvalidMentionException $e) {
+			return;
+		}
+		$this->fail("An expected exception has not been thrown");
 	}
 
 }

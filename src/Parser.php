@@ -5,6 +5,7 @@ namespace JonnyBarnes\WebmentionsParser;
 use Mf2;
 
 class ParsingException extends \Exception {}
+class InvalidMentionException extends \Exception {}
 
 class Parser {
 
@@ -39,8 +40,8 @@ class Parser {
 			return 'repost-of';
 		}
 
-		//can't determine what type of mentio it is, throw exception
-		throw new ParsingException("Can't determine type of mention");
+		//can't determine what type of mention it is, throw exception
+		throw new InvalidMentionException();
 	}
 
 	/**
