@@ -40,4 +40,32 @@ class ParserTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($expected, $parser->getMentionType($mf));
 	}
 
+	public function testMentionTypeRepost()
+	{
+		$html = '<!doctype html>
+<html>
+	<body class="h-entry h-as-repost">
+		<a class="u-repost u-repost-of" href="#"></a>
+	</body>
+</html>';
+		$parser = new Parser();
+		$mf = $parser->getMicroformats($html);
+		$expected = 'repost-of';
+		$this->assertEquals($expected, $parser->getMentionType($mf));
+	}
+
+	public function testMentionTypeLike()
+	{
+		$html = '<!doctype html>
+<html>
+	<body class="h-entry h-as-like">
+		<a class="u-like u-like-of" href="#"></a>
+	</body>
+</html>';
+		$parser = new Parser();
+		$mf = $parser->getMicroformats($html);
+		$expected = 'like-of';
+		$this->assertEquals($expected, $parser->getMentionType($mf));
+	}
+
 }
