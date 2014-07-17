@@ -88,4 +88,68 @@ class ParserTest extends PHPUnit_Framework_TestCase {
 		$this->fail("An expected exception has not been thrown");
 	}
 
+	/**
+	 * Test targeting
+	 */
+	public function testCheckReplyTo()
+	{
+		$html = '<!doctype html>
+<html>
+	<body class="h-entry">
+		<div class="p-in-reply-to h-cite">
+			<p>
+				<a class="u-url" rel="in-reply-to" href="http://billy.com/notes/2014/06/22/4/">
+				<time class="dt-published" datetime="2014-06-22T22:59:13-07:00">2014-06-22 22:59</time></a>
+			</p>
+		
+			<p class="p-author h-card">
+				<img class="u-photo" src="http://billy.com/images/billy.png" alt="" />		
+				<a class="u-url p-name" href="http://billy.com/">Billy</a>
+			</p>
+		
+			<div class="p-summary p-name e-content">
+				<img alt="" class="u-photo" src="http://billy.com/notes/2014/06/22/4/files/photo.jpg" />
+				Not bad...
+			</div>
+		</div>
+				
+		<div class="p-name entry-title p-summary summary e-content entry-content">
+			<p><a class="auto-link h-x-username" href="https://twitter.com/billy">@billy</a> Looks great</p>
+		</div>
+	</body>
+</html>';
+		$target = 'http://billy.com/notes/2014/06/22/4/';
+		$parser = new Parser();
+		$mf = $parser->getMicroformats($html);
+		$this->assertTrue($parser->checkInReplyTo($mf, $target));
+	}
+
+	public function testCheckRepostOf()
+	{
+		$html = '<!doctype html>
+<html>
+	<body class="h-entry h-as-repost">
+		<a class="u-repost u-repost-of" href="http://billy.com/notes/2014/06/22/4/"></a>
+	</body>
+</html>';
+		$target = 'http://billy.com/notes/2014/06/22/4/';
+		$parser = new Parser();
+		$mf = $parser->getMicroformats($html);
+		$this->assertTrue($parser->checkRepostOf($mf, $target));
+	}
+
+	public function testCheckLikeOf()
+	{
+		$html = '<!doctype html>
+<html>
+	<body class="h-entry h-as-like">
+		<a class="u-like u-like-of" href="http://billy.com/notes/2014/06/22/4/"></a>
+	</body>
+</html>';
+		$target = 'http://billy.com/notes/2014/06/22/4/';
+		$parser = new Parser();
+		$mf = $parser->getMicroformats($html);
+		$this->assertTrue($parser->CheckLikeOF($mf, $target));
+	}
+
 }

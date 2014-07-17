@@ -45,6 +45,60 @@ class Parser {
 	}
 
 	/**
+	 * Check a reply is to the intended target
+	 */
+	public function checkInReplyTo(array $mf, $target)
+	{
+		$items = $mf['items'];
+		foreach($items as $item) {
+			$properties = $item['properties'];
+			if(array_key_exists('in-reply-to', $properties)) {
+				if(is_array($properties['in-reply-to'][0])) {
+					if($properties['in-reply-to'][0]['properties']['url'][0] == $target) {
+						return true;
+					}
+				} else {
+					foreach($properties['in-reply-to'] as $url) {
+						if($url == $target) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	public function checkLikeOf($mf, $target)
+	{
+		$likeOf = (isset($mf['items'][0]['properties']['like-of'])) ? $mf['items'][0]['properties']['like-of'] : null;
+		if($likeOf) {
+			foreach($likeOf as $url) {
+				if($url == $target) {
+					return true;
+				}
+			}
+		} else {
+			return false;
+		}
+	}
+
+	public function checkRepostOf($mf, $target)
+	{
+		$repostOf = (isset($mf['items'][0]['properties']['repost-of'])) ? $mf['items'][0]['properties']['repost-of'] : null;
+		if($repostOf) {
+			foreach($repostOf as $url) {
+				if($url == $target) {
+					return true;
+				}
+			}
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * Our recursive array_key_exists function
 	 */
 	private function array_key_exists_r($needle, $haystack)
