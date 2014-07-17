@@ -45,7 +45,7 @@ class Parser {
 	}
 
 	/**
-	 * Check a reply is to the intended target
+	 * Check a mention is to the intended target
 	 */
 	public function checkInReplyTo(array $mf, $target)
 	{
@@ -70,7 +70,7 @@ class Parser {
 		return false;
 	}
 
-	public function checkLikeOf($mf, $target)
+	public function checkLikeOf(array $mf, $target)
 	{
 		$likeOf = (isset($mf['items'][0]['properties']['like-of'])) ? $mf['items'][0]['properties']['like-of'] : null;
 		if($likeOf) {
@@ -84,7 +84,7 @@ class Parser {
 		}
 	}
 
-	public function checkRepostOf($mf, $target)
+	public function checkRepostOf(array $mf, $target)
 	{
 		$repostOf = (isset($mf['items'][0]['properties']['repost-of'])) ? $mf['items'][0]['properties']['repost-of'] : null;
 		if($repostOf) {
