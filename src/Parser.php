@@ -114,4 +114,54 @@ class Parser {
 		return $result;
 	}
 
+	/**
+	 * Now we actually parse the mf2 for desired data
+	 */
+	public function replyContent($mf)
+	{
+		$authorName = (isset($mf['items'][0]['properties']['author'][0]['properties']['name'][0])) ? $mf['items'][0]['properties']['author'][0]['properties']['name'][0] : null;
+		$authorUrl = (isset($mf['items'][0]['properties']['author'][0]['properties']['url'][0])) ? $mf['items'][0]['properties']['author'][0]['properties']['url'][0] : null;
+		$authorPhoto = (isset($mf['items'][0]['properties']['author'][0]['properties']['photo'][0])) ? $mf['items'][0]['properties']['author'][0]['properties']['photo'][0] : null;
+		$replyHTML = (isset($mf['items'][0]['properties']['content'][0]['html'])) ? $mf['items'][0]['properties']['content'][0]['html'] : null;
+		$date = (isset($mf['items'][0]['properties']['published'][0])) ? $mf['items'][0]['properties']['published'][0] : null;
+		
+		if((isset($authorName)) && (isset($authorUrl)) && (isset($authorPhoto)) && (isset($replyHTML)) && (isset($date))) {
+			$data = array('name' => $authorName, 'url' => $authorUrl, 'photo' => $authorPhoto, 'reply' => $replyHTML, 'date' => $date);
+
+			return $data;
+		} else {
+			throw new ParsingException('Some data missing from parsed source');
+		}
+	}
+
+	public function likeContent($mf)
+	{
+		$authorName = (isset($mf['items'][0]['properties']['author'][0]['properties']['name'][0])) ? $mf['items'][0]['properties']['author'][0]['properties']['name'][0] : null;
+		$authorUrl = (isset($mf['items'][0]['properties']['author'][0]['properties']['url'][0])) ? $mf['items'][0]['properties']['author'][0]['properties']['url'][0] : null;
+		$authorPhoto = (isset($mf['items'][0]['properties']['author'][0]['properties']['photo'][0])) ? $mf['items'][0]['properties']['author'][0]['properties']['photo'][0] : null;
+		if((isset($authorName)) && (isset($authorUrl)) && (isset($authorPhoto))) {
+			$data = array('name' => $authorName, 'url' => $authorUrl, 'photo' => $authorPhoto);
+
+			return $data;
+		} else {
+			throw new ParsingException('Some data missing from parsed source');
+		}
+	}
+
+	public function repostContent($mf)
+	{
+		$authorName = (isset($mf['items'][0]['properties']['author'][0]['properties']['name'][0])) ? $mf['items'][0]['properties']['author'][0]['properties']['name'][0] : null;
+		$authorUrl = (isset($mf['items'][0]['properties']['author'][0]['properties']['url'][0])) ? $mf['items'][0]['properties']['author'][0]['properties']['url'][0] : null;
+		$authorPhoto = (isset($mf['items'][0]['properties']['author'][0]['properties']['photo'][0])) ? $mf['items'][0]['properties']['author'][0]['properties']['photo'][0] : null;
+		$url = (isset($mf['items'][0]['properties']['url'][0])) ? $mf['items'][0]['properties']['url'][0] : null;
+		$date = (isset($mf['items'][0]['properties']['published'][0])) ? $mf['items'][0]['properties']['published'][0] : null;
+		if((isset($authorName)) && (isset($authorUrl)) && (isset($authorPhoto)) && (isset($url)) && (isset($date))) {
+			$data = array('name' => $authorName, 'url' => $authorUrl, 'photo' => $authorPhoto, 'repost' => $url, 'date' => $date);
+
+			return $data;
+		} else {
+			throw new ParsingException('Some data missing from parsed source');
+		}
+	}
+
 }
