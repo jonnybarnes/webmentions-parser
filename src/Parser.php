@@ -1,6 +1,6 @@
 <?php
 
-namespace JonnyBarnes\WebmentionsParser;
+namespace Jonnybarnes\WebmentionsParser;
 
 use Mf2;
 

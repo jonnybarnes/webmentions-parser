@@ -1,8 +1,8 @@
 <?php
 
-use JonnyBarnes\WebmentionsParser\Parser;
-use JonnyBarnes\WebmentionsParser\ParsingException;
-use JonnyBarnes\WebmentionsParser\InvalidMentionException;
+use Jonnybarnes\WebmentionsParser\Parser;
+use Jonnybarnes\WebmentionsParser\ParsingException;
+use Jonnybarnes\WebmentionsParser\InvalidMentionException;
 
 class ParserTest extends PHPUnit_Framework_TestCase {
 
