@@ -6,7 +6,7 @@
 	"authors": [
 		{
 			"name": "Jonny Barnes",
-			"homepage": "https://jonnybarnes.net"
+			"homepage": "https://jonnybarnes.uk"
 		}
 	],
 	"support": {
@@ -22,5 +22,8 @@
 		"psr-4": {
 			"Jonnybarnes\\WebmentionsParser\\": "src"
 		}
+	},
+	"config": {
+		"preferred-install": "source"
 	}
 }
