@@ -81,4 +81,41 @@ class ParserTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue($parser->CheckLikeOF($mf, $target));
 	}
 
+	public function testReplyContent()
+	{
+		$html = file_get_contents($this->dir . '/HTML/testReplyContent.html');
+		$parser = new Parser();
+		$mf = $parser->getMicroformats($html);
+		$expected = array(	'name' => 'Joe Bloggs',
+							'url' => 'http://joebloggs.com/',
+							'photo' => 'http://joebloggs.com/photo.png',
+							'reply' => '<p><a class="auto-link h-x-username" href="https://twitter.com/billy">@billy</a> Looks great</p> - <time class="dt-published" datetime="2014-06-23T14:15:16+0100">2014-06-23 14:15</time>',
+							'date' => '2014-06-23T14:15:16+0100');
+		$this->assertEquals($expected, $replyContent = $parser->replyContent($mf));
+	}
+
+	public function testRepostContent()
+	{
+		$html = file_get_contents($this->dir . '/HTML/testRepostContent.html');
+		$parser = new Parser();
+		$mf = $parser->getMicroformats($html);
+		$expected = array(	'name' => 'Joe Bloggs',
+							'url' => 'http://joebloggs.com/',
+							'photo' => 'http://joebloggs.com/photo.png',
+							'repost' => 'http://billy.com/notes/2014/06/22/4/',
+							'date' => '2014-06-24T12:13:14+0000');
+		$this->assertEquals($expected, $parser->repostContent($mf));
+	}
+
+	public function testLikeContent()
+	{
+		$html = file_get_contents($this->dir . '/HTML/testLikeCOntent.html');
+		$parser = new Parser();
+		$mf = $parser->getMicroformats($html);
+		$expected = array(	'name' => 'Joe Bloggs',
+							'url' => 'http://joebloggs.com/',
+							'photo' => 'http://joebloggs.com/photo.png');
+		$this->assertEquals($expected, $parser->likeContent($mf));
+	}
+
 }
