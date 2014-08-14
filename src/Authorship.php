@@ -83,16 +83,16 @@ class Authorship {
 			
 			//if page has 1+ h-card where url == uid == author-page then use first
 			//such h-card, exit
-			if(array_search('uid', $hEntry)
-			foreach($authorMf2['items'] as $item) {
-				if(array_search('h-card', $item['type']) !== false) {
-					$urls = $item['properties']['url'];
-					foreach($urls as $url) {
-						if($url == $uid && $url == $authorPage) {
-							return $item;
+			if(array_search('uid', $hEntry) {
+				foreach($authorMf2['items'] as $item) {
+					if(array_search('h-card', $item['type']) !== false) {
+						$urls = $item['properties']['url'];
+						foreach($urls as $url) {
+							if($url == $uid && $url == $authorPage) {
+								return $item;
+							}
 						}
 					}
-
 				}
 			}
 
