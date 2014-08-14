@@ -1,0 +1,3 @@
+[submodule "tests/HTML/authorship-test-cases"]
+	path = tests/HTML/authorship-test-cases
+	url = git@github.com:sandeepshetty/authorship-test-cases.git
