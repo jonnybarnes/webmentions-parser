@@ -22,7 +22,7 @@ class Authorship {
 		//instantiate vars
 		$hEntry = false;
 		$author = false;
-		$authorPage == false;
+		$authorPage = false;
 		
 		for($i = 0; $i < count($mf['items']); $i++) {
 			foreach($mf['items'][$i]['type'] as $type) {
