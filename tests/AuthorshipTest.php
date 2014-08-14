@@ -14,10 +14,10 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase {
 	public function testAlgo()
 	{
 		$mock = new MockAdapter(function() {
-			$html = file_get_content($this->dir . '/HTML/authorship-test-cases/h-card_with_u-url_that_is_also_rel-me');
+			$mockhtml = file_get_content($this->dir . '/HTML/authorship-test-cases/h-card_with_u-url_that_is_also_rel-me');
 
-			return new Response(200, null, $html);
-		})
+			return new Response(200, null, $mockhtml);
+		});
 		$html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_pointing_to_h-card_with_u-url_that_is_also_rel-me.html');
 		$parser = new Parser();
 		$auth = new Authorship();
