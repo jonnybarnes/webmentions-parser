@@ -63,7 +63,7 @@ class Authorship {
 		//if no author-page and h-entry is a permalink then look for rel-author link
 		//and let that be author-page
 		if($authorPage === false && $this->isPermalink($hEntry) == true) {
-			if(array_key_exists($mf['rels']['author']) {
+			if(array_key_exists('author', $mf['rels']) {
 				$authorPage == $mf['rels']['author'];
 			}
 		}
@@ -100,7 +100,7 @@ class Authorship {
 			//link on the page, use first such h-card, exit
 			foreach($autherMf2['items'] as $item) {
 				if(array_search('h-card', $item['type']) !== false
-				  && array_key_exists($authorMf2['rels']['me'])) {
+				  && array_key_exists('me', $authorMf2['rels'])) {
 					$urls = $item['properties']['url'];
 					$relMeLinks = $authorMf2['rels']['me'];
 					foreach($urls as $url) {
