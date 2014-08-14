@@ -63,7 +63,7 @@ class Authorship {
 		//if no author-page and h-entry is a permalink then look for rel-author link
 		//and let that be author-page
 		if($authorPage === false && $this->isPermalink($hEntry) == true) {
-			if(array_key_exists('author', $mf['rels']) {
+			if(array_key_exists('author', $mf['rels'])) {
 				$authorPage == $mf['rels']['author'];
 			}
 		}
