@@ -75,7 +75,7 @@ class Authorship {
 				$guzzle = new GuzzleHttp\Client();
 				$parser = new Parser();
 				$response = $guzzle->get($authorPage);
-				$html = $response->getBody();
+				$html = $response->getBody(true);
 			} catch(GuzzleHttp\BadResponseException $e) {
 				throw new ParserException('Unable to get the Content from the authors page');
 			}
