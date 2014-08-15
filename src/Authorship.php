@@ -69,7 +69,7 @@ class Authorship {
 			}
 
 			//otherwise if `author` is a URL, let that be author-page
-			if($author == url) {
+			if(filter_var($author, FILTER_VALIDATE_URL)) {
 				$authorPage = $author;
 			} else {
 				//otherwise use `author` property as author name, exit
