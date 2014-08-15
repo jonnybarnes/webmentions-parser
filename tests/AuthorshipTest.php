@@ -96,10 +96,10 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase {
 					'John Doe'
 				),
 				'url' => array(
-					'h-card_with_u-url_equal_to_u-uid_equal_to_self.html'
+					'h-card_with_u-url_equal_to_u-uid_equal_to_self.html '
 				),
 				'uid' => array(
-					'h-card_with_u-url_equal_to_u-uid_equal_to_self.html'
+					'h-card_with_u-url_equal_to_u-uid_equal_to_self.html '
 				),
 				'photo' => array(
 					'http://www.gravatar.com/avatar/fd876f8cd6a58277fc664d47ea10ad19.jpg?s=80&d=mm'
