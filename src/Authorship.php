@@ -38,6 +38,7 @@ class Authorship {
 		
 		//instantiate vars
 		$hEntry = false;
+		$hFeed = false;
 		$author = false;
 		$authorPage = false;
 		
@@ -45,21 +46,35 @@ class Authorship {
 			foreach($mf['items'][$i]['type'] as $type) {
 				if($type == 'h-entry') {
 					$hEntry = $mf['items'][$i];
+				} elseif ($type == 'h-feed') {
+					$hFeed = $mf['items'][$i];
 				}
 			}
 		}
-		if($hEntry === false) {
+
+		if($hEntry === false && $hFeed === false) {
+			//we may neither an h-entry or an h-feed in the parent items array
 			throw new ParsingException('No h-entry found');
 		}
 
 		//parse the h-entry
+		if($hEntry !== false) {
 
-		//if h-entry has an author property use that
-		if(array_key_exists('author', $hEntry['properties'])) {
-			$author = $hEntry['properties']['author'];
+			//if h-entry has an author property use that
+			if(array_key_exists('author', $hEntry['properties'])) {
+				$author = $hEntry['properties'];
+			}
 		}
 
 		//otherwise look for parent h-feed, if that has author property use that
+		if($hFeed !== false) {
+			foreach($hFeed['children'] as $child) {
+				if($child['type'][0] == 'h-card') {
+					//we have a h-card on the page, use it
+					$author = $child['properties'];
+				}
+			}
+		}
 
 		//if an author property was found
 		if($author !== false) {
@@ -82,6 +97,7 @@ class Authorship {
 		if($authorPage === false && $permalink == true) {
 			if(array_key_exists('author', $mf['rels'])) {
 				if(is_array($mf['rels']['author'])) {
+					//need to deal with this better
 					$authorPage = $mf['rels']['author'][0];
 				} else {
 					$authorPage = $mf['rels']['author'];
