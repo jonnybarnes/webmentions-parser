@@ -51,9 +51,6 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * We need to adapt the algo to find the h-card also on the page,
-	 * it currently fails to find an author
-	 *
 	 * @expectedException Jonnybarnes\WebmentionsParser\AuthorException
 	 */
 	public function testHEntryWithRelAuthorAndHCardWithUUrlPointingToRelAuthorHref()
