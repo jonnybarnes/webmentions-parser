@@ -148,7 +148,11 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase {
 		$auth = new Authorship();
 		$mf = $parser->getMicroformats($html);
 
-		$expected = array();
+		$expected = array(
+			'name' => array(
+				'Joe Bloggs'
+			)
+		);
 
 		$this->assertEquals($expected, $auth->findAuthor($mf));
 	}
