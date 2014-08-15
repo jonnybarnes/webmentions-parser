@@ -49,4 +49,27 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals($expected, $auth->findAuthor($mf));
 	}
+
+	/**
+	 * We need to adapt the algo to find the h-card also on the page,
+	 * it currently fails to find an author
+	 *
+	 * @expectedException Jonnybarnes\WebmentionsParser\AuthorException
+	 */
+	public function testHEntryWithRelAuthorAndHCardWithUUrlPointingToRelAuthorHref()
+	{
+		$mock = new MockAdapter(function() {
+			$mockhtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/no_h-card.html');
+			$stream = Stream\create($mockhtml);
+
+			return new Response(200, array(), $stream);
+		});
+		$html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_and_h-card_with_u-url_pointing_to_rel-author_href.html');
+		$parser = new Parser();
+		$auth = new Authorship();
+		$auth->mockAdapter($mock);
+		$mf = $parser->getMicroformats($html);
+
+		$author = $auth->findAuthor($mf);
+	}
 }
