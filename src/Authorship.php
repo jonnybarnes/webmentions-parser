@@ -8,11 +8,28 @@ class ParserException extends \Exception {}
 class AuthorException extends \Exception {}
 
 class Authorship {
+
+	/*
+	 * Set up the Guzzle Client dependency for when we may need it
+	 */
+	public function __construct()
+	{
+		$this->guzzle = new \GuzzleHttp\Client();
+	}
+
+	/*
+	 * This methos is used by PHPUnit tests to replace the Guzzle Client
+	 * with a new Client that has a mock adapter to return "dummy" content
+	 */
+	public function mockAdapter($adapter)
+	{
+		$this->guzzle = new \GuzzleHttp\Client(['adapter' => $adapter]);
+	}
 	
 	/*
-	 * Parse the mf for the author's h-card
+	 * Parse the mf for the author's h-card, assume a permalink for now
 	 */
-	public function findAuthor($mf)
+	public function findAuthor($mf, $permalink = true)
 	{
 		//check for h-entry's
 		/* will currently only work with first h-entry
@@ -38,7 +55,7 @@ class Authorship {
 		//parse the h-entry
 
 		//if h-entry has an author property use that
-		if(array_key_exists($hEntry['properties']['author'])) {
+		if(array_key_exists('author', $hEntry['properties'])) {
 			$author = $hEntry['properties']['author'];
 		}
 
@@ -62,9 +79,13 @@ class Authorship {
 
 		//if no author-page and h-entry is a permalink then look for rel-author link
 		//and let that be author-page
-		if($authorPage === false && $this->isPermalink($hEntry) == true) {
+		if($authorPage === false && $permalink == true) {
 			if(array_key_exists('author', $mf['rels'])) {
-				$authorPage == $mf['rels']['author'];
+				if(is_array($mf['rels']['author'])) {
+					$authorPage = $mf['rels']['author'][0];
+				} else {
+					$authorPage = $mf['rels']['author'];
+				}
 			}
 		}
 
@@ -72,11 +93,11 @@ class Authorship {
 		if($authorPage !== false) {
 			//grab mf2 from author-page
 			try {
-				$guzzle = new GuzzleHttp\Client();
 				$parser = new Parser();
-				$response = $guzzle->get($authorPage);
-				$html = $response->getBody(true);
-			} catch(GuzzleHttp\BadResponseException $e) {
+				$response = $this->guzzle->get($authorPage);
+				$html = (string) $response->getBody();
+			} catch(\GuzzleHttp\Exception\RequestException $e) {
+				var_dump($e);
 				throw new ParserException('Unable to get the Content from the authors page');
 			}
 			$authorMf2 = \Mf2\parse($html, $authorPage);
@@ -98,7 +119,7 @@ class Authorship {
 
 			//else if page has 1+ h-card with url property which matches a rel-me
 			//link on the page, use first such h-card, exit
-			foreach($autherMf2['items'] as $item) {
+			foreach($authorMf2['items'] as $item) {
 				if(array_search('h-card', $item['type']) !== false
 				  && array_key_exists('me', $authorMf2['rels'])) {
 					$urls = $item['properties']['url'];
