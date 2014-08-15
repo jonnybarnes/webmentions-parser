@@ -109,4 +109,38 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals($expected, $author = $auth->findAuthor($mf));
 	}
+
+	public function testHEntryWithRelAuthorPointingToHCardWithUUrlThatIsAlsoRelMe()
+	{
+		$mock = new MockAdapter(function() {
+			$mockhtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-card_with_u-url_that_is_also_rel-me.html');
+			$stream = Stream\create($mockhtml);
+
+			return new Response(200, array(), $stream);
+		});
+		$html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_pointing_to_h-card_with_u-url_that_is_also_rel-me.html');
+		$parser = new Parser();
+		$auth = new Authorship();
+		$auth->mockAdapter($mock);
+		$mf = $parser->getMicroformats($html);
+
+		$expected = array(
+			'type' => array(
+				'h-card'
+			),
+			'properties' => array(
+				'name' => array(
+					'John Doe'
+				),
+				'url' => array(
+					'h-card_with_u-url_that_is_also_rel-me.html'
+				),
+				'photo' => array(
+					'http://www.gravatar.com/avatar/fd876f8cd6a58277fc664d47ea10ad19.jpg?s=80&d=mm'
+				)
+			)
+		);
+
+		$this->assertEquals($expected, $auth->findAuthor($mf));
+	}
 }
