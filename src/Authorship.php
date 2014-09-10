@@ -18,7 +18,7 @@ class Authorship {
 	}
 
 	/*
-	 * This methos is used by PHPUnit tests to replace the Guzzle Client
+	 * This method is used by PHPUnit tests to replace the Guzzle Client
 	 * with a new Client that has a mock adapter to return "dummy" content
 	 */
 	public function mockAdapter($adapter)
@@ -37,91 +37,93 @@ class Authorship {
 		*/
 		
 		//instantiate vars
-		$hEntry = false;
-		$hFeed = false;
-		$author = false;
-		$authorPage = false;
+		$this->permalink = $permalink;
+		$this->mf = $mf;
+		$this->hEntry = false;
+		$this->hFeed = false;
+		$this->author = false;
+		$this->authorPage = false;
 		
-		for($i = 0; $i < count($mf['items']); $i++) {
-			foreach($mf['items'][$i]['type'] as $type) {
+		for($i = 0; $i < count($this->mf['items']); $i++) {
+			foreach($this->mf['items'][$i]['type'] as $type) {
 				if($type == 'h-entry') {
-					$hEntry = $mf['items'][$i];
+					$this->hEntry = $this->mf['items'][$i];
 				} elseif ($type == 'h-feed') {
-					$hFeed = $mf['items'][$i];
+					$this->hFeed = $this->mf['items'][$i];
 				}
 			}
 		}
 
-		if($hEntry === false && $hFeed === false) {
+		if($this->hEntry === false && $this->hFeed === false) {
 			//we may neither an h-entry or an h-feed in the parent items array
 			throw new ParsingException('No h-entry found');
 		}
 
 		//parse the h-entry
-		if($hEntry !== false) {
+		if(this->$hEntry !== false) {
 
 			//if h-entry has an author property use that
-			if(array_key_exists('author', $hEntry['properties'])) {
-				$author = $hEntry['properties'];
+			if(array_key_exists('author', $this->hEntry['properties'])) {
+				$this->author = $this->hEntry['properties'];
 			}
 		}
 
 		//otherwise look for parent h-feed, if that has author property use that
-		if($hFeed !== false) {
-			foreach($hFeed['children'] as $child) {
+		if($this->hFeed !== false) {
+			foreach($this->hFeed['children'] as $child) {
 				if($child['type'][0] == 'h-card') {
 					//we have a h-card on the page, use it
-					$author = $child['properties'];
+					$this->author = $child['properties'];
 				}
 			}
 		}
 
 		//if an author property was found
-		if($author !== false) {
+		if($this->author !== false) {
 			//if it has an h-card, use it, exit
-			if(array_search('h-card', $author) !== false) {
-				return $author;
+			if(array_search('h-card', $this->author) !== false) {
+				return $this->author;
 			}
 
 			//otherwise if `author` is a URL, let that be author-page
-			if(filter_var($author, FILTER_VALIDATE_URL)) {
-				$authorPage = $author;
+			if(filter_var($this->author, FILTER_VALIDATE_URL)) {
+				$this->authorPage = $this->author;
 			} else {
 				//otherwise use `author` property as author name, exit
-				return $author;
+				return $this->author;
 			}
 		}
 
 		//if no author-page and h-entry is a permalink then look for rel-author link
 		//and let that be author-page
-		if($authorPage === false && $permalink == true) {
-			if(array_key_exists('author', $mf['rels'])) {
-				if(is_array($mf['rels']['author'])) {
+		if($this->authorPage === false && $this->permalink == true) {
+			if(array_key_exists('author', $this->mf['rels'])) {
+				if(is_array($this->mf['rels']['author'])) {
 					//need to deal with this better
-					$authorPage = $mf['rels']['author'][0];
+					$this->authorPage = $this->mf['rels']['author'][0];
 				} else {
-					$authorPage = $mf['rels']['author'];
+					$this->authorPage = $this->mf['rels']['author'];
 				}
 			}
 		}
 
 		//if there is an author-page
-		if($authorPage !== false) {
+		if($this->authorPage !== false) {
 			//grab mf2 from author-page
 			try {
-				$parser = new Parser();
-				$response = $this->guzzle->get($authorPage);
-				$html = (string) $response->getBody();
+				$this->parser = new Parser();
+				$this->response = $this->guzzle->get($authorPage);
+				$this->html = (string) $this->response->getBody();
 			} catch(\GuzzleHttp\Exception\RequestException $e) {
-				var_dump($e);
+				//var_dump($e);
 				throw new ParserException('Unable to get the Content from the authors page');
 			}
-			$authorMf2 = \Mf2\parse($html, $authorPage);
+			$this->authorMf2 = \Mf2\parse($this->html, $this->authorPage);
 			
 			//if page has 1+ h-card where url == uid == author-page then use first
 			//such h-card, exit
-			if(array_search('uid', $hEntry)) {
-				foreach($authorMf2['items'] as $item) {
+			if(array_search('uid', $this->hEntry)) {
+				foreach($this->authorMf2['items'] as $item) {
 					if(array_search('h-card', $item['type']) !== false) {
 						$urls = $item['properties']['url'];
 						foreach($urls as $url) {
@@ -135,25 +137,24 @@ class Authorship {
 
 			//else if page has 1+ h-card with url property which matches a rel-me
 			//link on the page, use first such h-card, exit
-			foreach($authorMf2['items'] as $item) {
+			foreach($this->authorMf2['items'] as $item) {
 				if(array_search('h-card', $item['type']) !== false
-				  && array_key_exists('me', $authorMf2['rels'])) {
+				  && array_key_exists('me', $this->authorMf2['rels'])) {
 					$urls = $item['properties']['url'];
-					$relMeLinks = $authorMf2['rels']['me'];
-					foreach($urls as $url) {
-						if(in_array($url, $relMeLinks)) {
-							return $item;
-						}
+					$relMeLinks = $this->authorMf2['rels']['me'];
+					//in_array can take an arry for its needle
+					if(in_array($urls, $relMeLinks)) {
+						return $item;
 					}
 				}
 			}
 
 			//if the h-entry page has 1+ h-card with url == author-page, use first
 			//such h-card, exit
-			foreach($authorMf2['items'] as $item) {
+			foreach($this->authorMf2['items'] as $item) {
 				if(array_search('h-card', $item['type']) !== false) {
 					$urls = $item['properties']['url'];
-					if(in_array($authorPage, $urls)) {
+					if(in_array($this->authorPage, $urls)) {
 						return $item;
 					}
 				}
