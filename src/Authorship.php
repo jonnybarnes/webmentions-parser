@@ -41,8 +41,9 @@ class Authorship {
 		$this->mf = $mf;
 		$this->hEntry = false;
 		$this->hFeed = false;
-		$this->author = false;
-		$this->authorPage = false;
+		$this->author = null;
+		$this->authorPage = null;
+		$this->authorInfo = null;
 		
 		for($i = 0; $i < count($this->mf['items']); $i++) {
 			foreach($this->mf['items'][$i]['type'] as $type) {
@@ -60,11 +61,11 @@ class Authorship {
 		}
 
 		//parse the h-entry
-		if(this->$hEntry !== false) {
+		if($this->hEntry !== false) {
 
 			//if h-entry has an author property use that
 			if(array_key_exists('author', $this->hEntry['properties'])) {
-				$this->author = $this->hEntry['properties'];
+				$this->author = $this->hEntry['properties']['author'];
 			}
 		}
 
@@ -82,7 +83,7 @@ class Authorship {
 		if($this->author !== false) {
 			//if it has an h-card, use it, exit
 			if(array_search('h-card', $this->author) !== false) {
-				return $this->author;
+				$this->authorInfo = $this->author;
 			}
 
 			//otherwise if `author` is a URL, let that be author-page
@@ -90,7 +91,7 @@ class Authorship {
 				$this->authorPage = $this->author;
 			} else {
 				//otherwise use `author` property as author name, exit
-				return $this->author;
+				$this->authorInfo = $this->author;
 			}
 		}
 
@@ -108,11 +109,11 @@ class Authorship {
 		}
 
 		//if there is an author-page
-		if($this->authorPage !== false) {
+		if($this->authorPage !== null) {
 			//grab mf2 from author-page
 			try {
 				$this->parser = new Parser();
-				$this->response = $this->guzzle->get($authorPage);
+				$this->response = $this->guzzle->get($this->authorPage);
 				$this->html = (string) $this->response->getBody();
 			} catch(\GuzzleHttp\Exception\RequestException $e) {
 				//var_dump($e);
@@ -128,7 +129,7 @@ class Authorship {
 						$urls = $item['properties']['url'];
 						foreach($urls as $url) {
 							if($url == $uid && $url == $authorPage) {
-								return $item;
+								$this->authorInfo = $item;
 							}
 						}
 					}
@@ -144,7 +145,7 @@ class Authorship {
 					$relMeLinks = $this->authorMf2['rels']['me'];
 					//in_array can take an arry for its needle
 					if(in_array($urls, $relMeLinks)) {
-						return $item;
+						$this->authorInfo = $item;
 					}
 				}
 			}
@@ -155,14 +156,18 @@ class Authorship {
 				if(array_search('h-card', $item['type']) !== false) {
 					$urls = $item['properties']['url'];
 					if(in_array($this->authorPage, $urls)) {
-						return $item;
+						$this->authorInfo = $item;
 					}
 				}
 			}
 
 		}
-		//otherwise we can't determine the author just yet
-		throw new AuthorException('Unable to determine author');
+
+		if($this->authorInfo) {
+			return $this->authorInfo;
+		} else {
+			return false;
+		}
 
 	}
 
