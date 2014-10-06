@@ -47,14 +47,9 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase {
 			)
 		);
 
-		print_r($mf);
-
 		$this->assertEquals($expected, $auth->findAuthor($mf));
 	}
 
-	/**
-	 * @expectedException Jonnybarnes\WebmentionsParser\AuthorException
-	 */
 	public function testHEntryWithRelAuthorAndHCardWithUUrlPointingToRelAuthorHref()
 	{
 		$mock = new MockAdapter(function() {
@@ -70,6 +65,7 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase {
 		$mf = $parser->getMicroformats($html);
 
 		$author = $auth->findAuthor($mf);
+		$this->assertFalse($author);
 	}
 
 	public function testHEntryWithRelAuthorPointingToHCardWithUUrlEqualToUUidEqualToSelf()
@@ -106,7 +102,7 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase {
 			)
 		);
 
-		$this->assertEquals($expected, $author = $auth->findAuthor($mf));
+		$this->assertEquals($expected, $auth->findAuthor($mf));
 	}
 
 	public function testHEntryWithRelAuthorPointingToHCardWithUUrlThatIsAlsoRelMe()
