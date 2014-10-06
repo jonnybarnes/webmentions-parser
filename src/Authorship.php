@@ -80,10 +80,12 @@ class Authorship {
 		}
 
 		//if an author property was found
-		if($this->author !== false) {
+		if($this->author !== null) {
 			//if it has an h-card, use it, exit
-			if(array_search('h-card', $this->author) !== false) {
-				$this->authorInfo = $this->author;
+			if(is_array($this->author)) {
+				if(array_search('h-card', $this->author) !== false) {
+					$this->authorInfo = $this->author;
+				}
 			}
 
 			//otherwise if `author` is a URL, let that be author-page
@@ -97,7 +99,7 @@ class Authorship {
 
 		//if no author-page and h-entry is a permalink then look for rel-author link
 		//and let that be author-page
-		if($this->authorPage === false && $this->permalink == true) {
+		if($this->authorPage === null && $this->permalink == true) {
 			if(array_key_exists('author', $this->mf['rels'])) {
 				if(is_array($this->mf['rels']['author'])) {
 					//need to deal with this better
