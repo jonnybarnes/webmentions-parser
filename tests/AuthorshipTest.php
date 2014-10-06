@@ -47,6 +47,8 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase {
 			)
 		);
 
+		print_r($mf);
+
 		$this->assertEquals($expected, $auth->findAuthor($mf));
 	}
 
