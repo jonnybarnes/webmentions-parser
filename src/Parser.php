@@ -4,7 +4,7 @@ namespace Jonnybarnes\WebmentionsParser;
 
 use Mf2;
 
-class ParsingException extends \Exception {}
+class ParserException extends \Exception {}
 class InvalidMentionException extends \Exception {}
 
 class Parser {
@@ -19,7 +19,7 @@ class Parser {
 			$mf = \Mf2\parse($html);
 		} catch(Exception $e) {
 			//log $e maybe?
-			throw new ParsingException("php-mf2 failed to parse the HTML");
+			throw new ParserException("php-mf2 failed to parse the HTML");
 		}
 
 		return $mf;
@@ -117,51 +117,108 @@ class Parser {
 	/**
 	 * Now we actually parse the mf2 for desired data
 	 */
-	public function replyContent($mf)
+	public function replyContent($mf, $domain = null)
 	{
-		$authorName = (isset($mf['items'][0]['properties']['author'][0]['properties']['name'][0])) ? $mf['items'][0]['properties']['author'][0]['properties']['name'][0] : null;
-		$authorUrl = (isset($mf['items'][0]['properties']['author'][0]['properties']['url'][0])) ? $mf['items'][0]['properties']['author'][0]['properties']['url'][0] : null;
-		$authorPhoto = (isset($mf['items'][0]['properties']['author'][0]['properties']['photo'][0])) ? $mf['items'][0]['properties']['author'][0]['properties']['photo'][0] : null;
 		$replyHTML = (isset($mf['items'][0]['properties']['content'][0]['html'])) ? $mf['items'][0]['properties']['content'][0]['html'] : null;
-		$date = (isset($mf['items'][0]['properties']['published'][0])) ? $mf['items'][0]['properties']['published'][0] : null;
+		if($replyHTML === null) {
+			//if there is no actual reply content...
+			throw new ParsingException('No reply content found');
+		} else {
+			//lets "clean" the HTML
+			$replyHTML = trim($replyHTML);
+		}
 		
-		if((isset($authorName)) && (isset($authorUrl)) && (isset($authorPhoto)) && (isset($replyHTML)) && (isset($date))) {
-			$data = array('name' => $authorName, 'url' => $authorUrl, 'photo' => $authorPhoto, 'reply' => trim($replyHTML), 'date' => $date);
-
-			return $data;
-		} else {
-			throw new ParsingException('Some data missing from parsed source');
-		}
-	}
-
-	public function likeContent($mf)
-	{
-		$authorName = (isset($mf['items'][0]['properties']['author'][0]['properties']['name'][0])) ? $mf['items'][0]['properties']['author'][0]['properties']['name'][0] : null;
-		$authorUrl = (isset($mf['items'][0]['properties']['author'][0]['properties']['url'][0])) ? $mf['items'][0]['properties']['author'][0]['properties']['url'][0] : null;
-		$authorPhoto = (isset($mf['items'][0]['properties']['author'][0]['properties']['photo'][0])) ? $mf['items'][0]['properties']['author'][0]['properties']['photo'][0] : null;
-		if((isset($authorName)) && (isset($authorUrl)) && (isset($authorPhoto))) {
-			$data = array('name' => $authorName, 'url' => $authorUrl, 'photo' => $authorPhoto);
-
-			return $data;
-		} else {
-			throw new ParsingException('Some data missing from parsed source');
-		}
-	}
-
-	public function repostContent($mf)
-	{
-		$authorName = (isset($mf['items'][0]['properties']['author'][0]['properties']['name'][0])) ? $mf['items'][0]['properties']['author'][0]['properties']['name'][0] : null;
-		$authorUrl = (isset($mf['items'][0]['properties']['author'][0]['properties']['url'][0])) ? $mf['items'][0]['properties']['author'][0]['properties']['url'][0] : null;
-		$authorPhoto = (isset($mf['items'][0]['properties']['author'][0]['properties']['photo'][0])) ? $mf['items'][0]['properties']['author'][0]['properties']['photo'][0] : null;
-		$url = (isset($mf['items'][0]['properties']['repost-of'][0])) ? $mf['items'][0]['properties']['repost-of'][0] : null;
 		$date = (isset($mf['items'][0]['properties']['published'][0])) ? $mf['items'][0]['properties']['published'][0] : null;
-		if((isset($authorName)) && (isset($authorUrl)) && (isset($authorPhoto)) && (isset($url)) && (isset($date))) {
-			$data = array('name' => $authorName, 'url' => $authorUrl, 'photo' => $authorPhoto, 'repost' => $url, 'date' => $date);
-
-			return $data;
-		} else {
-			throw new ParsingException('Some data missing from parsed source');
+		if($date === null) {
+			//there is no date, just fluff with the current date
+			$date = date('Y-m-d H:i:s \U\T\CO');
 		}
+
+		$authorship = new Authorship();
+		try {
+			$author = $authorship->findAuthor($mf);
+		} catch(ParserException $e) {
+			$author = null;
+		}
+		if($author === null) {
+			//we couldn't find actual authorship data, so fall back to domain
+			if($domain !== null) {
+				$authorName = parse_url($domain)['host'];
+				$authorUrl = 'http://' . parse_url($domain)['host'];
+			} else {
+				$authorName = null;
+				$auhorUrl = null;
+			}
+			$authorPhoto = null;
+		} else {
+			$authorName = $author['properties']['name'][0];
+			$authorUrl = $author['properties']['url'][0];
+			$authorPhoto = $author['properties']['photo'][0];
+		}
+
+		return array('name' => $authorName, 'url' => $authorUrl, 'photo' => $authorPhoto, 'reply' => $replyHTML, 'date' => $date);
+	}
+
+	public function likeContent($mf, $domain = null)
+	{
+		$authorship = new Authorship();
+		try {
+			$author = $authorship->findAuthor($mf);
+		} catch(ParserException $e) {
+			$author = null;
+		}
+		if($author === null) {
+			//we couldn't find actual authorship data, so fall back to domain
+			if($domain !== null) {
+				$authorName = parse_url($domain)['host'];
+				$authorUrl = 'http://' . parse_url($domain)['host'];
+			} else {
+				$authorName = null;
+				$auhorUrl = null;
+			}
+			$authorPhoto = null;
+		} else {
+			$authorName = $author['properties']['name'][0];
+			$authorUrl = $author['properties']['url'][0];
+			$authorPhoto = $author['properties']['photo'][0];
+		}
+
+		return array('name' => $authorName, 'url' => $authorUrl, 'photo' => $authorPhoto);
+	}
+
+	public function repostContent($mf, $domain = null)
+	{
+		$url = (isset($mf['items'][0]['properties']['repost-of'][0])) ? $mf['items'][0]['properties']['repost-of'][0] : null;
+		
+		$date = (isset($mf['items'][0]['properties']['published'][0])) ? $mf['items'][0]['properties']['published'][0] : null;
+		if($date === null) {
+			//there is no date, just fluff with the current date
+			$date = date('Y-m-d H:i:s \U\T\CO');
+		}
+
+		$authorship = new Authorship();
+		try {
+			$author = $authorship->findAuthor($mf);
+		} catch(ParserException $e) {
+			$author = null;
+		}
+		if($author === null) {
+			//we couldn't find actual authorship data, so fall back to domain
+			if($domain !== null) {
+				$authorName = parse_url($domain)['host'];
+				$authorUrl = 'http://' . parse_url($domain)['host'];
+			} else {
+				$authorName = null;
+				$auhorUrl = null;
+			}
+			$authorPhoto = null;
+		} else {
+			$authorName = $author['properties']['name'][0];
+			$authorUrl = $author['properties']['url'][0];
+			$authorPhoto = $author['properties']['photo'][0];
+		}
+
+		return array('name' => $authorName, 'url' => $authorUrl, 'photo' => $authorPhoto, 'repost' => $url, 'date' => $date);
 	}
 
 }

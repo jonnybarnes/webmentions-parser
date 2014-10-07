@@ -2,7 +2,7 @@
 
 use Jonnybarnes\WebmentionsParser\Authorship;
 use Jonnybarnes\WebmentionsParser\Parser;
-use Jonnybarnes\WebmentionsPArser\AuthorException;
+use Jonnybarnes\WebmentionsParser\AuthorException;
 
 use GuzzleHttp\Adapter\MockAdapter;
 use GuzzleHttp\Message\Response;
@@ -152,7 +152,7 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase {
 				)
 			)
 		);
-		
+
 		$this->assertEquals($expected, $auth->findAuthor($mf));
 	}
 }

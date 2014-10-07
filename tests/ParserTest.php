@@ -91,7 +91,7 @@ class ParserTest extends PHPUnit_Framework_TestCase {
 							'photo' => 'http://joebloggs.com/photo.png',
 							'reply' => '<p><a class="auto-link h-x-username" href="https://twitter.com/billy">@billy</a> Looks great</p> - <time class="dt-published" datetime="2014-06-23T14:15:16+0100">2014-06-23 14:15</time>',
 							'date' => '2014-06-23T14:15:16+0100');
-		$this->assertEquals($expected, $replyContent = $parser->replyContent($mf));
+		$this->assertEquals($expected, $parser->replyContent($mf));
 	}
 
 	public function testRepostContent()

@@ -4,8 +4,7 @@ namespace Jonnybarnes\WebmentionsParser;
 
 use Mf2;
 
-class ParserException extends \Exception {}
-class AuthorException extends \Exception {}
+class AuthorshipParserException extends \Exception {}
 
 class Authorship {
 
@@ -57,7 +56,7 @@ class Authorship {
 
 		if($this->hEntry === false && $this->hFeed === false) {
 			//we may neither an h-entry or an h-feed in the parent items array
-			throw new ParsingException('No h-entry found');
+			throw new AuthorshipParserException('No h-entry found');
 		}
 
 		//parse the h-entry
@@ -119,7 +118,7 @@ class Authorship {
 				$this->html = (string) $this->response->getBody();
 			} catch(\GuzzleHttp\Exception\RequestException $e) {
 				//var_dump($e);
-				throw new ParserException('Unable to get the Content from the authors page');
+				throw new AuthorshipParserException('Unable to get the Content from the authors page');
 			}
 			$this->authorMf2 = \Mf2\parse($this->html, $this->authorPage);
 			
