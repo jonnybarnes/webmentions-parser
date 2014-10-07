@@ -178,9 +178,13 @@ class Authorship {
 		if(array_key_exists(0, $author)) {
 			$author = $author[0];
 		}
-		
+
 		if(array_key_exists('value', $author)) {
 			unset($author['value']);
+		}
+
+		if(array_key_exists('children', $author)) {
+			unset($author['children']);
 		}
 
 		return $author;
