@@ -166,11 +166,24 @@ class Authorship {
 		}
 
 		if($this->authorInfo) {
-			return $this->authorInfo;
+			return $this->normalise($this->authorInfo);
 		} else {
 			return false;
 		}
 
+	}
+
+	public function normalise($author)
+	{
+		if(array_key_exists(0, $author)) {
+			$author = $author[0];
+		}
+		
+		if(array_key_exists('value', $author)) {
+			unset($author['value']);
+		}
+
+		return $author;
 	}
 
 }

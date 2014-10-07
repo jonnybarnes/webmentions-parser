@@ -27,23 +27,19 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase {
 		$mf = $parser->getMicroformats($html);
 
 		$expected = array(
-			array(
-				'type' => array(
-					'h-card'
+			'type' => array(
+				'h-card'
+			),
+			'properties' => array(
+				'name' => array(
+					'John Doe'
 				),
-				'properties' => array(
-					'name' => array(
-						'John Doe'
-					),
-					'url' => array(
-						'http://example.com/johndoe/'
-					),
-					'photo' => array(
-						'http://www.gravatar.com/avatar/fd876f8cd6a58277fc664d47ea10ad19.jpg?s=80&d=mm'
-					)
+				'url' => array(
+					'http://example.com/johndoe/'
 				),
-				'value' => 'http://www.gravatar.com/avatar/fd876f8cd6a58277fc664d47ea10ad19.jpg?s=80&d=mm
-			John Doe'
+				'photo' => array(
+					'http://www.gravatar.com/avatar/fd876f8cd6a58277fc664d47ea10ad19.jpg?s=80&d=mm'
+				)
 			)
 		);
 
