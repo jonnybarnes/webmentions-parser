@@ -74,7 +74,7 @@ class Authorship {
 			foreach($this->hFeed['children'] as $child) {
 				if($child['type'][0] == 'h-card') {
 					//we have a h-card on the page, use it
-					$this->author = $child['properties'];
+					$this->author = $child;
 				}
 			}
 		}
