@@ -137,7 +137,7 @@ class Parser {
 		$authorship = new Authorship();
 		try {
 			$author = $authorship->findAuthor($mf);
-		} catch(ParserException $e) {
+		} catch(AuthorshipParserException $e) {
 			$author = null;
 		}
 		if($author === null) {
@@ -164,7 +164,7 @@ class Parser {
 		$authorship = new Authorship();
 		try {
 			$author = $authorship->findAuthor($mf);
-		} catch(ParserException $e) {
+		} catch(AuthorshipParserException $e) {
 			$author = null;
 		}
 		if($author === null) {
@@ -199,7 +199,7 @@ class Parser {
 		$authorship = new Authorship();
 		try {
 			$author = $authorship->findAuthor($mf);
-		} catch(ParserException $e) {
+		} catch(AuthorshipParserException $e) {
 			$author = null;
 		}
 		if($author === null) {
