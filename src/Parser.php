@@ -147,7 +147,7 @@ class Parser {
 				$authorUrl = 'http://' . parse_url($domain)['host'];
 			} else {
 				$authorName = null;
-				$auhorUrl = null;
+				$authorUrl = null;
 			}
 			$authorPhoto = null;
 		} else {
@@ -174,7 +174,7 @@ class Parser {
 				$authorUrl = 'http://' . parse_url($domain)['host'];
 			} else {
 				$authorName = null;
-				$auhorUrl = null;
+				$authorUrl = null;
 			}
 			$authorPhoto = null;
 		} else {
@@ -209,7 +209,7 @@ class Parser {
 				$authorUrl = 'http://' . parse_url($domain)['host'];
 			} else {
 				$authorName = null;
-				$auhorUrl = null;
+				$authorUrl = null;
 			}
 			$authorPhoto = null;
 		} else {
