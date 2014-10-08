@@ -145,8 +145,11 @@ class Authorship {
 					$urls = $item['properties']['url'];
 					$relMeLinks = $this->authorMf2['rels']['me'];
 					//in_array can take an arry for its needle
-					if(in_array($urls, $relMeLinks)) {
-						$this->authorInfo = $item;
+					foreach($urls as $url) {
+						if(in_array($url, $relMeLinks)) {
+							$this->authorInfo = $item;
+							break;
+						}
 					}
 				}
 			}
