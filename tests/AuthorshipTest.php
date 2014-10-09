@@ -12,13 +12,6 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase {
 
 	private $dir = __DIR__;
 
-		/*$mock = new MockAdapter(function() {
-			$mockhtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-card_with_u-url_that_is_also_rel-me.html');
-			$stream = Stream\create($mockhtml);
-
-			return new Response(200, array(), $stream);
-		});*/
-
 	public function testHEntryWithPAuthor()
 	{
 		$html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_p-author.html');
@@ -48,7 +41,7 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase {
 
 	public function testHEntryWithRelAuthorAndHCardWithUUrlPointingToRelAuthorHref()
 	{
-		$mock = new MockAdapter(function() {
+		$mockadapter = new MockAdapter(function() {
 			$mockhtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/no_h-card.html');
 			$stream = Stream\create($mockhtml);
 
@@ -56,8 +49,8 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase {
 		});
 		$html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_and_h-card_with_u-url_pointing_to_rel-author_href.html');
 		$parser = new Parser();
-		$auth = new Authorship();
-		$auth->mockAdapter($mock);
+		$client = new \GuzzleHttp\Client(['adapter' => $mockadapter]);
+		$auth = new Authorship($client);
 		$mf = $parser->getMicroformats($html);
 
 		$author = $auth->findAuthor($mf);
@@ -66,7 +59,7 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase {
 
 	public function testHEntryWithRelAuthorPointingToHCardWithUUrlEqualToUUidEqualToSelf()
 	{
-		$mock = new MockAdapter(function() {
+		$mockadapter = new MockAdapter(function() {
 			$mockhtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-card_with_u-url_equal_to_u-uid_equal_to_self.html');
 			$stream = Stream\create($mockhtml);
 
@@ -74,8 +67,8 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase {
 		});
 		$html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_pointing_to_h-card_with_u-url_equal_to_u-uid_equal_to_self.html');
 		$parser = new Parser();
-		$auth = new Authorship();
-		$auth->mockAdapter($mock);
+		$client = new \GuzzleHttp\Client(['adapter' => $mockadapter]);
+		$auth = new Authorship($client);
 		$mf = $parser->getMicroformats($html);
 
 		$expected = array(
@@ -103,7 +96,7 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase {
 
 	public function testHEntryWithRelAuthorPointingToHCardWithUUrlThatIsAlsoRelMe()
 	{
-		$mock = new MockAdapter(function() {
+		$mockadapter = new MockAdapter(function() {
 			$mockhtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-card_with_u-url_that_is_also_rel-me.html');
 			$stream = Stream\create($mockhtml);
 
@@ -111,8 +104,8 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase {
 		});
 		$html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_pointing_to_h-card_with_u-url_that_is_also_rel-me.html');
 		$parser = new Parser();
-		$auth = new Authorship();
-		$auth->mockAdapter($mock);
+		$client = new \GuzzleHttp\Client(['adapter' => $mockadapter]);
+		$auth = new Authorship($client);
 		$mf = $parser->getMicroformats($html);
 
 		$expected = array(

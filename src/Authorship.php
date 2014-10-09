@@ -8,21 +8,19 @@ class AuthorshipParserException extends \Exception {}
 
 class Authorship {
 
+	protected $client;
+
 	/*
 	 * Set up the Guzzle Client dependency for when we may need it
 	 */
-	public function __construct()
+	public function __construct($client = null)
 	{
-		$this->guzzle = new \GuzzleHttp\Client();
-	}
-
-	/*
-	 * This method is used by PHPUnit tests to replace the Guzzle Client
-	 * with a new Client that has a mock adapter to return "dummy" content
-	 */
-	public function mockAdapter($adapter)
-	{
-		$this->guzzle = new \GuzzleHttp\Client(['adapter' => $adapter]);
+		//$this->guzzle = ($client === null) ? new \GuzzleHttp\Client() : $client;
+		if($client === null) {
+			$this->guzzle = new \GuzzleHttp\Client();
+		} else {
+			$this->guzzle = $client;
+		}
 	}
 	
 	/*
