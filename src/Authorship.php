@@ -81,7 +81,7 @@ class Authorship {
 			//if it has an h-card, use it, exit
 			if(is_array($this->author)) {
 				if(array_search('h-card', $this->author) !== false) {
-					$this->authorInfo = $this->author;
+					return $this->normalise($this->author);
 				}
 			}
 
@@ -90,7 +90,7 @@ class Authorship {
 				$this->authorPage = $this->author;
 			} else {
 				//otherwise use `author` property as author name, exit
-				$this->authorInfo = $this->author;
+				return $this->normalise($this->author);
 			}
 		}
 
@@ -128,7 +128,7 @@ class Authorship {
 						$urls = $item['properties']['url'];
 						foreach($urls as $url) {
 							if($url == $uid && $url == $authorPage) {
-								$this->authorInfo = $item;
+								return $this->normalise($item);
 							}
 						}
 					}
@@ -145,8 +145,7 @@ class Authorship {
 					//in_array can take an arry for its needle
 					foreach($urls as $url) {
 						if(in_array($url, $relMeLinks)) {
-							$this->authorInfo = $item;
-							break;
+							return $this->normalise($item);
 						}
 					}
 				}
@@ -158,18 +157,16 @@ class Authorship {
 				if(array_search('h-card', $item['type']) !== false) {
 					$urls = $item['properties']['url'];
 					if(in_array($this->authorPage, $urls)) {
-						$this->authorInfo = $item;
+						return $this->normalise($item);
 					}
 				}
 			}
 
 		}
 
-		if($this->authorInfo) {
-			return $this->normalise($this->authorInfo);
-		} else {
-			return false;
-		}
+		//if we have got this far, we haven't been able to determine auhtor info
+		//to return, so return false
+		return false;
 
 	}
 
