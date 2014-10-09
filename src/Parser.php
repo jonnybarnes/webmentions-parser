@@ -13,10 +13,10 @@ class Parser {
 	 * What we really want to parse are the microformats, but here's a starter method
 	 * to deal with the original HTML.
 	 */
-	public function getMicroformats($html)
+	public function getMicroformats($html, $domain)
 	{
 		try {
-			$mf = \Mf2\parse($html);
+			$mf = \Mf2\parse($html, $domain);
 		} catch(Exception $e) {
 			//log $e maybe?
 			throw new ParserException("php-mf2 failed to parse the HTML");
