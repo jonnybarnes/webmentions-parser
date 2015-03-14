@@ -3,149 +3,150 @@
 use Jonnybarnes\WebmentionsParser\Authorship;
 use Jonnybarnes\WebmentionsParser\Parser;
 use Jonnybarnes\WebmentionsParser\AuthorException;
-
-use GuzzleHttp\Adapter\MockAdapter;
+use GuzzleHttp\Client;
+use GuzzleHttp\Subscriber\Mock;
 use GuzzleHttp\Message\Response;
-use GuzzleHttp\Stream;
+use GuzzleHttp\Stream\Stream;
 
-class AuthorshipTest extends PHPUnit_Framework_TestCase {
+class AuthorshipTest extends PHPUnit_Framework_TestCase
+{
 
-	private $dir = __DIR__;
+    private $dir = __DIR__;
 
-	public function testHEntryWithPAuthor()
-	{
-		$html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_p-author.html');
-		$parser = new Parser();
-		$auth = new Authorship();
-		$mf = $parser->getMicroformats($html);
+    public function testHEntryWithPAuthor()
+    {
+        $html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_p-author.html');
+        $parser = new Parser();
+        $auth = new Authorship();
+        $mf = $parser->getMicroformats($html, null);
 
-		$expected = array(
-			'type' => array(
-				'h-card'
-			),
-			'properties' => array(
-				'name' => array(
-					'John Doe'
-				),
-				'url' => array(
-					'http://example.com/johndoe/'
-				),
-				'photo' => array(
-					'http://www.gravatar.com/avatar/fd876f8cd6a58277fc664d47ea10ad19.jpg?s=80&d=mm'
-				)
-			)
-		);
+        $expected = array(
+            'type' => array(
+                'h-card'
+            ),
+            'properties' => array(
+                'name' => array(
+                    'John Doe'
+                ),
+                'url' => array(
+                    'http://example.com/johndoe/'
+                ),
+                'photo' => array(
+                    'http://www.gravatar.com/avatar/fd876f8cd6a58277fc664d47ea10ad19.jpg?s=80&d=mm'
+                )
+            )
+        );
 
-		$this->assertEquals($expected, $auth->findAuthor($mf));
-	}
+        $this->assertEquals($expected, $auth->findAuthor($mf));
+    }
 
-	public function testHEntryWithRelAuthorAndHCardWithUUrlPointingToRelAuthorHref()
-	{
-		$mockadapter = new MockAdapter(function() {
-			$mockhtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/no_h-card.html');
-			$stream = Stream\create($mockhtml);
+    public function testHEntryWithRelAuthorAndHCardWithUUrlPointingToRelAuthorHref()
+    {
+        $mockhtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/no_h-card.html');
+        $stream = Stream::factory($mockhtml);
+        $mock = new Mock([
+            new Response(200, [], $stream)
+        ]);
+        $html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_and_h-card_with_u-url_pointing_to_rel-author_href.html');
+        $parser = new Parser();
+        $client = new Client();
+        $client->getEmitter()->attach($mock);
+        $auth = new Authorship($client);
+        $mf = $parser->getMicroformats($html, null);
 
-			return new Response(200, array(), $stream);
-		});
-		$html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_and_h-card_with_u-url_pointing_to_rel-author_href.html');
-		$parser = new Parser();
-		$client = new \GuzzleHttp\Client(['adapter' => $mockadapter]);
-		$auth = new Authorship($client);
-		$mf = $parser->getMicroformats($html);
+        $author = $auth->findAuthor($mf);
+        $this->assertFalse($author);
+    }
 
-		$author = $auth->findAuthor($mf);
-		$this->assertFalse($author);
-	}
+    public function testHEntryWithRelAuthorPointingToHCardWithUUrlEqualToUUidEqualToSelf()
+    {
+        $mockhtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-card_with_u-url_equal_to_u-uid_equal_to_self.html');
+        $stream = Stream::factory($mockhtml);
+        $mock = new Mock([
+            new Response(200, [], $stream)
+        ]);
+        $html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_pointing_to_h-card_with_u-url_equal_to_u-uid_equal_to_self.html');
+        $parser = new Parser();
+        $client = new Client();
+        $client->getEmitter()->attach($mock);
+        $auth = new Authorship($client);
+        $mf = $parser->getMicroformats($html, null);
 
-	public function testHEntryWithRelAuthorPointingToHCardWithUUrlEqualToUUidEqualToSelf()
-	{
-		$mockadapter = new MockAdapter(function() {
-			$mockhtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-card_with_u-url_equal_to_u-uid_equal_to_self.html');
-			$stream = Stream\create($mockhtml);
+        $expected = array(
+            'type' => array(
+                'h-card'
+            ),
+            'properties' => array(
+                'name' => array(
+                    'John Doe'
+                ),
+                'url' => array(
+                    'h-card_with_u-url_equal_to_u-uid_equal_to_self.html '
+                ),
+                'uid' => array(
+                    'h-card_with_u-url_equal_to_u-uid_equal_to_self.html '
+                ),
+                'photo' => array(
+                    'http://www.gravatar.com/avatar/fd876f8cd6a58277fc664d47ea10ad19.jpg?s=80&d=mm'
+                )
+            )
+        );
 
-			return new Response(200, array(), $stream);
-		});
-		$html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_pointing_to_h-card_with_u-url_equal_to_u-uid_equal_to_self.html');
-		$parser = new Parser();
-		$client = new \GuzzleHttp\Client(['adapter' => $mockadapter]);
-		$auth = new Authorship($client);
-		$mf = $parser->getMicroformats($html);
+        $this->assertEquals($expected, $auth->findAuthor($mf));
+    }
 
-		$expected = array(
-			'type' => array(
-				'h-card'
-			),
-			'properties' => array(
-				'name' => array(
-					'John Doe'
-				),
-				'url' => array(
-					'h-card_with_u-url_equal_to_u-uid_equal_to_self.html '
-				),
-				'uid' => array(
-					'h-card_with_u-url_equal_to_u-uid_equal_to_self.html '
-				),
-				'photo' => array(
-					'http://www.gravatar.com/avatar/fd876f8cd6a58277fc664d47ea10ad19.jpg?s=80&d=mm'
-				)
-			)
-		);
+    public function testHEntryWithRelAuthorPointingToHCardWithUUrlThatIsAlsoRelMe()
+    {
+        $mockhtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-card_with_u-url_that_is_also_rel-me.html');
+        $stream = Stream::factory($mockhtml);
+        $mock = new Mock([
+            new Response(200, [], $stream)
+        ]);
+        $html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_pointing_to_h-card_with_u-url_that_is_also_rel-me.html');
+        $parser = new Parser();
+        $client = new Client();
+        $client->getEmitter()->attach($mock);
+        $auth = new Authorship($client);
+        $mf = $parser->getMicroformats($html, null);
 
-		$this->assertEquals($expected, $auth->findAuthor($mf));
-	}
+        $expected = array(
+            'type' => array(
+                'h-card'
+            ),
+            'properties' => array(
+                'name' => array(
+                    'John Doe'
+                ),
+                'url' => array(
+                    'h-card_with_u-url_that_is_also_rel-me.html'
+                ),
+                'photo' => array(
+                    'http://www.gravatar.com/avatar/fd876f8cd6a58277fc664d47ea10ad19.jpg?s=80&d=mm'
+                )
+            )
+        );
 
-	public function testHEntryWithRelAuthorPointingToHCardWithUUrlThatIsAlsoRelMe()
-	{
-		$mockadapter = new MockAdapter(function() {
-			$mockhtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-card_with_u-url_that_is_also_rel-me.html');
-			$stream = Stream\create($mockhtml);
+        $this->assertEquals($expected, $auth->findAuthor($mf));
+    }
 
-			return new Response(200, array(), $stream);
-		});
-		$html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_pointing_to_h-card_with_u-url_that_is_also_rel-me.html');
-		$parser = new Parser();
-		$client = new \GuzzleHttp\Client(['adapter' => $mockadapter]);
-		$auth = new Authorship($client);
-		$mf = $parser->getMicroformats($html);
+    public function testHFeed()
+    {
+        $html = file_get_contents($this->dir . '/HTML/h-feed.html');
+        $parser = new Parser();
+        $auth = new Authorship();
+        $mf = $parser->getMicroformats($html, null);
 
-		$expected = array(
-			'type' => array(
-				'h-card'
-			),
-			'properties' => array(
-				'name' => array(
-					'John Doe'
-				),
-				'url' => array(
-					'h-card_with_u-url_that_is_also_rel-me.html'
-				),
-				'photo' => array(
-					'http://www.gravatar.com/avatar/fd876f8cd6a58277fc664d47ea10ad19.jpg?s=80&d=mm'
-				)
-			)
-		);
+        $expected = array(
+            'type' => array(
+                'h-card'
+            ),
+            'properties' => array(
+                'name' => array(
+                    'Joe Bloggs'
+                )
+            )
+        );
 
-		$this->assertEquals($expected, $auth->findAuthor($mf));
-	}
-
-	public function testHFeed()
-	{
-		$html = file_get_contents($this->dir . '/HTML/h-feed.html');
-		$parser = new Parser();
-		$auth = new Authorship();
-		$mf = $parser->getMicroformats($html);
-
-		$expected = array(
-			'type' => array(
-				'h-card'
-			),
-			'properties' => array(
-				'name' => array(
-					'Joe Bloggs'
-				)
-			)
-		);
-
-		$this->assertEquals($expected, $auth->findAuthor($mf));
-	}
+        $this->assertEquals($expected, $auth->findAuthor($mf));
+    }
 }
