@@ -1,9 +1,10 @@
-<?php  namespace Jonnybarnes\WebmentionsParser;
+<?php
+
+namespace Jonnybarnes\WebmentionsParser;
 
 use Mf2;
-
-class ParserException extends \Exception {}
-class InvalidMentionException extends \Exception {}
+use Jonnybarnes\WebmentionsParser\Exceptions\ParserException;
+use Jonnybarnes\WebmentionsParser\Exceptions\InvalidMentionException;
 
 class Parser
 {
@@ -15,27 +16,27 @@ class Parser
     public function getMicroformats($html, $domain)
     {
         try {
-            $mf = \Mf2\parse($html, $domain);
+            $microformats = \Mf2\parse($html, $domain);
         } catch (Exception $e) {
             //log $e maybe?
             throw new ParserException("php-mf2 failed to parse the HTML");
         }
 
-        return $mf;
+        return $microformats;
     }
 
     /**
      * Return the type of mention or throw an error if undetermined
      */
-    public function getMentionType(array $mf)
+    public function getMentionType(array $microformats)
     {
-        if ($this->arrayKeyExistsRecursive('in-reply-to', $mf)) {
+        if ($this->arrayKeyExistsRecursive('in-reply-to', $microformats)) {
             return 'in-reply-to';
         }
-        if ($this->arrayKeyExistsRecursive('like-of', $mf)) {
+        if ($this->arrayKeyExistsRecursive('like-of', $microformats)) {
             return 'like-of';
         }
-        if ($this->arrayKeyExistsRecursive('repost-of', $mf)) {
+        if ($this->arrayKeyExistsRecursive('repost-of', $microformats)) {
             return 'repost-of';
         }
 
@@ -46,9 +47,9 @@ class Parser
     /**
      * Check a mention is to the intended target
      */
-    public function checkInReplyTo(array $mf, $target)
+    public function checkInReplyTo(array $microformats, $target)
     {
-        $items = $mf['items'];
+        $items = $microformats['items'];
         foreach ($items as $item) {
             $properties = $item['properties'];
             if (array_key_exists('in-reply-to', $properties)) {
@@ -69,9 +70,9 @@ class Parser
         return false;
     }
 
-    public function checkLikeOf(array $mf, $target)
+    public function checkLikeOf(array $microformats, $target)
     {
-        $likeOf = (isset($mf['items'][0]['properties']['like-of'])) ? $mf['items'][0]['properties']['like-of'] : null;
+        $likeOf = (isset($microformats['items'][0]['properties']['like-of'])) ? $microformats['items'][0]['properties']['like-of'] : null;
         if ($likeOf) {
             foreach ($likeOf as $url) {
                 if ($url == $target) {
@@ -83,9 +84,9 @@ class Parser
         }
     }
 
-    public function checkRepostOf(array $mf, $target)
+    public function checkRepostOf(array $microformats, $target)
     {
-        $repostOf = (isset($mf['items'][0]['properties']['repost-of'])) ? $mf['items'][0]['properties']['repost-of'] : null;
+        $repostOf = (isset($microformats['items'][0]['properties']['repost-of'])) ? $microformats['items'][0]['properties']['repost-of'] : null;
         if ($repostOf) {
             foreach ($repostOf as $url) {
                 if ($url == $target) {
@@ -120,9 +121,9 @@ class Parser
     /**
      * Now we actually parse the mf2 for desired data
      */
-    public function replyContent($mf, $domain = null)
+    public function replyContent($microformats, $domain = null)
     {
-        $replyHTML = (isset($mf['items'][0]['properties']['content'][0]['html'])) ? $mf['items'][0]['properties']['content'][0]['html'] : null;
+        $replyHTML = (isset($microformats['items'][0]['properties']['content'][0]['html'])) ? $microformats['items'][0]['properties']['content'][0]['html'] : null;
         if ($replyHTML === null) {
             //if there is no actual reply content...
             throw new ParsingException('No reply content found');
@@ -130,8 +131,8 @@ class Parser
             //lets "clean" the HTML
             $replyHTML = trim($replyHTML);
         }
-        
-        $date = (isset($mf['items'][0]['properties']['published'][0])) ? $mf['items'][0]['properties']['published'][0] : null;
+
+        $date = (isset($microformats['items'][0]['properties']['published'][0])) ? $microformats['items'][0]['properties']['published'][0] : null;
         if ($date === null) {
             //there is no date, just fluff with the current date
             $date = date('Y-m-d H:i:s \U\T\CO');
@@ -139,7 +140,7 @@ class Parser
 
         $authorship = new Authorship();
         try {
-            $author = $authorship->findAuthor($mf);
+            $author = $authorship->findAuthor($microformats);
         } catch (AuthorshipParserException $e) {
             $author = null;
         }
@@ -162,11 +163,11 @@ class Parser
         return array('name' => $authorName, 'url' => $authorUrl, 'photo' => $authorPhoto, 'reply' => $replyHTML, 'date' => $date);
     }
 
-    public function likeContent($mf, $domain = null)
+    public function likeContent(array $microformats, $domain = null)
     {
         $authorship = new Authorship();
         try {
-            $author = $authorship->findAuthor($mf);
+            $author = $authorship->findAuthor($microformats);
         } catch (AuthorshipParserException $e) {
             $author = null;
         }
@@ -189,11 +190,11 @@ class Parser
         return array('name' => $authorName, 'url' => $authorUrl, 'photo' => $authorPhoto);
     }
 
-    public function repostContent($mf, $domain = null)
+    public function repostContent(array $microformats, $domain = null)
     {
-        $url = (isset($mf['items'][0]['properties']['repost-of'][0])) ? $mf['items'][0]['properties']['repost-of'][0] : null;
-        
-        $date = (isset($mf['items'][0]['properties']['published'][0])) ? $mf['items'][0]['properties']['published'][0] : null;
+        $url = (isset($microformats['items'][0]['properties']['repost-of'][0])) ? $microformats['items'][0]['properties']['repost-of'][0] : null;
+
+        $date = (isset($microformats['items'][0]['properties']['published'][0])) ? $microformats['items'][0]['properties']['published'][0] : null;
         if ($date === null) {
             //there is no date, just fluff with the current date
             $date = date('Y-m-d H:i:s \U\T\CO');
@@ -201,7 +202,7 @@ class Parser
 
         $authorship = new Authorship();
         try {
-            $author = $authorship->findAuthor($mf);
+            $author = $authorship->findAuthor($microformats);
         } catch (AuthorshipParserException $e) {
             $author = null;
         }

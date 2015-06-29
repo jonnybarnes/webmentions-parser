@@ -1,8 +1,9 @@
-<?php namespace Jonnybarnes\WebmentionsParser;
+<?php
+
+namespace Jonnybarnes\WebmentionsParser;
 
 use Mf2;
-
-class AuthorshipParserException extends \Exception {}
+use Jonnybarnes\WebmentionsParser\AuthorshipParserException;
 
 class Authorship
 {
@@ -14,14 +15,9 @@ class Authorship
      */
     public function __construct($client = null)
     {
-        //$this->guzzle = ($client === null) ? new \GuzzleHttp\Client() : $client;
-        if ($client === null) {
-            $this->guzzle = new \GuzzleHttp\Client();
-        } else {
-            $this->guzzle = $client;
-        }
+        $this->guzzle = ($client) ?: new \GuzzleHttp\Client();
     }
-    
+
     /*
      * Parse the mf for the author's h-card, assume a permalink for now
      */
@@ -31,7 +27,7 @@ class Authorship
         /* will currently only work with first h-entry
         TODO: work with multiple h-entry's
         */
-        
+
         //instantiate vars
         $this->permalink = $permalink;
         $this->mf = $mf;
@@ -40,7 +36,7 @@ class Authorship
         $this->author = null;
         $this->authorPage = null;
         $this->authorInfo = null;
-        
+
         for ($i = 0; $i < count($this->mf['items']); $i++) {
             foreach ($this->mf['items'][$i]['type'] as $type) {
                 if ($type == 'h-entry') {
@@ -112,12 +108,12 @@ class Authorship
                 $this->parser = new Parser();
                 $this->response = $this->guzzle->get($this->authorPage);
                 $this->html = (string) $this->response->getBody();
-            } catch (\GuzzleHttp\Exception\RequestException $e) {
+            } catch (\GuzzleHttp\Exception\BadResponseException $e) {
                 //var_dump($e);
                 throw new AuthorshipParserException('Unable to get the Content from the authors page');
             }
             $this->authorMf2 = \Mf2\parse($this->html, $this->authorPage);
-            
+
             //if page has 1+ h-card where url == uid == author-page then use first
             //such h-card, exit
             if (array_search('uid', $this->hEntry)) {

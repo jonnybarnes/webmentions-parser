@@ -2,11 +2,10 @@
 
 use Jonnybarnes\WebmentionsParser\Authorship;
 use Jonnybarnes\WebmentionsParser\Parser;
-use Jonnybarnes\WebmentionsParser\AuthorException;
 use GuzzleHttp\Client;
-use GuzzleHttp\Subscriber\Mock;
-use GuzzleHttp\Message\Response;
-use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
 
 class AuthorshipTest extends PHPUnit_Framework_TestCase
 {
@@ -42,35 +41,32 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
 
     public function testHEntryWithRelAuthorAndHCardWithUUrlPointingToRelAuthorHref()
     {
-        $mockhtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/no_h-card.html');
-        $stream = Stream::factory($mockhtml);
-        $mock = new Mock([
-            new Response(200, [], $stream)
-        ]);
+        $extrahtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/no_h-card.html');
         $html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_and_h-card_with_u-url_pointing_to_rel-author_href.html');
-        $parser = new Parser();
-        $client = new Client();
-        $client->getEmitter()->attach($mock);
+        $mock = new MockHandler([
+            new Response(200, [], $extrahtml)
+        ]);
+        $handler = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handler]);
         $auth = new Authorship($client);
-        $mf = $parser->getMicroformats($html, null);
-
-        $author = $auth->findAuthor($mf);
+        $parser = new Parser();
+        $microformats = $parser->getMicroformats($html, null);
+        $author = $auth->findAuthor($microformats);
         $this->assertFalse($author);
     }
 
     public function testHEntryWithRelAuthorPointingToHCardWithUUrlEqualToUUidEqualToSelf()
     {
-        $mockhtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-card_with_u-url_equal_to_u-uid_equal_to_self.html');
-        $stream = Stream::factory($mockhtml);
-        $mock = new Mock([
-            new Response(200, [], $stream)
-        ]);
+        $extrahtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-card_with_u-url_equal_to_u-uid_equal_to_self.html');
         $html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_pointing_to_h-card_with_u-url_equal_to_u-uid_equal_to_self.html');
-        $parser = new Parser();
-        $client = new Client();
-        $client->getEmitter()->attach($mock);
+        $mock = new MockHandler([
+            new Response(200, [], $extrahtml)
+        ]);
+        $handler = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handler]);
         $auth = new Authorship($client);
-        $mf = $parser->getMicroformats($html, null);
+        $parser = new Parser();
+        $microformats = $parser->getMicroformats($html, null);
 
         $expected = array(
             'type' => array(
@@ -92,22 +88,21 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
             )
         );
 
-        $this->assertEquals($expected, $auth->findAuthor($mf));
+        $this->assertEquals($expected, $auth->findAuthor($microformats));
     }
 
     public function testHEntryWithRelAuthorPointingToHCardWithUUrlThatIsAlsoRelMe()
     {
-        $mockhtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-card_with_u-url_that_is_also_rel-me.html');
-        $stream = Stream::factory($mockhtml);
-        $mock = new Mock([
-            new Response(200, [], $stream)
-        ]);
+        $extrahtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-card_with_u-url_that_is_also_rel-me.html');
         $html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_pointing_to_h-card_with_u-url_that_is_also_rel-me.html');
-        $parser = new Parser();
-        $client = new Client();
-        $client->getEmitter()->attach($mock);
+        $mock = new MockHandler([
+            new Response(200, [], $extrahtml)
+        ]);
+        $handler = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handler]);
         $auth = new Authorship($client);
-        $mf = $parser->getMicroformats($html, null);
+        $parser = new Parser();
+        $microformats = $parser->getMicroformats($html, null);
 
         $expected = array(
             'type' => array(
@@ -126,7 +121,7 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
             )
         );
 
-        $this->assertEquals($expected, $auth->findAuthor($mf));
+        $this->assertEquals($expected, $auth->findAuthor($microformats));
     }
 
     public function testHFeed()
