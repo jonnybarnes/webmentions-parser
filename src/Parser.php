@@ -8,10 +8,9 @@ use Jonnybarnes\WebmentionsParser\Exceptions\InvalidMentionException;
 
 class Parser
 {
-
     /**
-     * What we really want to parse are the microformats, but here's a starter method
-     * to deal with the original HTML.
+     * What we really want to parse are the microformats, but here's a starter
+     * method to deal with the original HTML.
      */
     public function getMicroformats($html, $domain)
     {
@@ -19,14 +18,14 @@ class Parser
             $microformats = \Mf2\parse($html, $domain);
         } catch (Exception $e) {
             //log $e maybe?
-            throw new ParserException("php-mf2 failed to parse the HTML");
+            throw new ParserException('php-mf2 failed to parse the HTML');
         }
 
         return $microformats;
     }
 
     /**
-     * Return the type of mention or throw an error if undetermined
+     * Return the type of mention or throw an error if undetermined.
      */
     public function getMentionType(array $microformats)
     {
@@ -45,7 +44,7 @@ class Parser
     }
 
     /**
-     * Check a mention is to the intended target
+     * Check a mention is to the intended target.
      */
     public function checkInReplyTo(array $microformats, $target)
     {
@@ -99,7 +98,7 @@ class Parser
     }
 
     /**
-     * Our recursive array_key_exists function
+     * Our recursive array_key_exists function.
      */
     private function arrayKeyExistsRecursive($needle, $haystack)
     {
@@ -115,11 +114,12 @@ class Parser
                 return $result;
             }
         }
+
         return $result;
     }
 
     /**
-     * Now we actually parse the mf2 for desired data
+     * Now we actually parse the mf2 for desired data.
      */
     public function replyContent($microformats, $domain = null)
     {

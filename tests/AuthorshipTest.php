@@ -1,15 +1,14 @@
 <?php
 
-use Jonnybarnes\WebmentionsParser\Authorship;
-use Jonnybarnes\WebmentionsParser\Parser;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use Jonnybarnes\WebmentionsParser\Parser;
+use Jonnybarnes\WebmentionsParser\Authorship;
 
 class AuthorshipTest extends PHPUnit_Framework_TestCase
 {
-
     private $dir = __DIR__;
 
     public function testHEntryWithPAuthor()
@@ -21,19 +20,19 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
 
         $expected = array(
             'type' => array(
-                'h-card'
+                'h-card',
             ),
             'properties' => array(
                 'name' => array(
-                    'John Doe'
+                    'John Doe',
                 ),
                 'url' => array(
-                    'http://example.com/johndoe/'
+                    'http://example.com/johndoe/',
                 ),
                 'photo' => array(
-                    'http://www.gravatar.com/avatar/fd876f8cd6a58277fc664d47ea10ad19.jpg?s=80&d=mm'
-                )
-            )
+                    'http://www.gravatar.com/avatar/fd876f8cd6a58277fc664d47ea10ad19.jpg?s=80&d=mm',
+                ),
+            ),
         );
 
         $this->assertEquals($expected, $auth->findAuthor($mf));
@@ -70,22 +69,22 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
 
         $expected = array(
             'type' => array(
-                'h-card'
+                'h-card',
             ),
             'properties' => array(
                 'name' => array(
-                    'John Doe'
+                    'John Doe',
                 ),
                 'url' => array(
-                    'h-card_with_u-url_equal_to_u-uid_equal_to_self.html '
+                    'h-card_with_u-url_equal_to_u-uid_equal_to_self.html ',
                 ),
                 'uid' => array(
-                    'h-card_with_u-url_equal_to_u-uid_equal_to_self.html '
+                    'h-card_with_u-url_equal_to_u-uid_equal_to_self.html ',
                 ),
                 'photo' => array(
-                    'http://www.gravatar.com/avatar/fd876f8cd6a58277fc664d47ea10ad19.jpg?s=80&d=mm'
-                )
-            )
+                    'http://www.gravatar.com/avatar/fd876f8cd6a58277fc664d47ea10ad19.jpg?s=80&d=mm',
+                ),
+            ),
         );
 
         $this->assertEquals($expected, $auth->findAuthor($microformats));
@@ -106,19 +105,19 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
 
         $expected = array(
             'type' => array(
-                'h-card'
+                'h-card',
             ),
             'properties' => array(
                 'name' => array(
-                    'John Doe'
+                    'John Doe',
                 ),
                 'url' => array(
-                    'h-card_with_u-url_that_is_also_rel-me.html'
+                    'h-card_with_u-url_that_is_also_rel-me.html',
                 ),
                 'photo' => array(
-                    'http://www.gravatar.com/avatar/fd876f8cd6a58277fc664d47ea10ad19.jpg?s=80&d=mm'
-                )
-            )
+                    'http://www.gravatar.com/avatar/fd876f8cd6a58277fc664d47ea10ad19.jpg?s=80&d=mm',
+                ),
+            ),
         );
 
         $this->assertEquals($expected, $auth->findAuthor($microformats));
@@ -133,13 +132,13 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
 
         $expected = array(
             'type' => array(
-                'h-card'
+                'h-card',
             ),
             'properties' => array(
                 'name' => array(
-                    'Joe Bloggs'
-                )
-            )
+                    'Joe Bloggs',
+                ),
+            ),
         );
 
         $this->assertEquals($expected, $auth->findAuthor($mf));

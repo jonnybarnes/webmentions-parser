@@ -7,7 +7,6 @@ use Jonnybarnes\WebmentionsParser\AuthorshipParserException;
 
 class Authorship
 {
-
     protected $client;
 
     /*
@@ -155,13 +154,11 @@ class Authorship
                     }
                 }
             }
-
         }
 
         //if we have got this far, we haven't been able to determine auhtor info
         //to return, so return false
         return false;
-
     }
 
     public function normalise($author)
