@@ -2,8 +2,8 @@
 
 namespace Jonnybarnes\WebmentionsParser;
 
-use Mf2;
 use Jonnybarnes\WebmentionsParser\Exceptions\AuthorshipParserException;
+use Mf2;
 
 class Authorship
 {
