@@ -43,7 +43,7 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
         $extrahtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/no_h-card.html');
         $html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_and_h-card_with_u-url_pointing_to_rel-author_href.html');
         $mock = new MockHandler(array(
-            new Response(200, array(), $extrahtml)
+            new Response(200, array(), $extrahtml),
         ));
         $handler = HandlerStack::create($mock);
         $client = new Client(array('handler' => $handler));
@@ -59,7 +59,7 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
         $extrahtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-card_with_u-url_equal_to_u-uid_equal_to_self.html');
         $html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_pointing_to_h-card_with_u-url_equal_to_u-uid_equal_to_self.html');
         $mock = new MockHandler(array(
-            new Response(200, array(), $extrahtml)
+            new Response(200, array(), $extrahtml),
         ));
         $handler = HandlerStack::create($mock);
         $client = new Client(array('handler' => $handler));
@@ -95,7 +95,7 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
         $extrahtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-card_with_u-url_that_is_also_rel-me.html');
         $html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_pointing_to_h-card_with_u-url_that_is_also_rel-me.html');
         $mock = new MockHandler(array(
-            new Response(200, array(), $extrahtml)
+            new Response(200, array(), $extrahtml),
         ));
         $handler = HandlerStack::create($mock);
         $client = new Client(array('handler' => $handler));
