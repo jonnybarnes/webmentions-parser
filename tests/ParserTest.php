@@ -1,7 +1,7 @@
 <?php
 
-use Jonnybarnes\WebmentionsParser\Parser;
 use Jonnybarnes\WebmentionsParser\Exceptions\InvalidMentionException;
+use Jonnybarnes\WebmentionsParser\Parser;
 
 class ParserTest extends PHPUnit_Framework_TestCase
 {
@@ -47,7 +47,7 @@ class ParserTest extends PHPUnit_Framework_TestCase
         } catch (InvalidMentionException $e) {
             return;
         }
-        $this->fail("An expected exception has not been thrown");
+        $this->fail('An expected exception has not been thrown');
     }
 
     /**
@@ -86,11 +86,11 @@ class ParserTest extends PHPUnit_Framework_TestCase
         $parser = new Parser();
         $microformats = $parser->getMicroformats($html, null);
         $expected = array(
-            'name' => 'Joe Bloggs',
-            'url' => 'http://joebloggs.com/',
+            'name'  => 'Joe Bloggs',
+            'url'   => 'http://joebloggs.com/',
             'photo' => 'http://joebloggs.com/photo.png',
             'reply' => '<p><a class="auto-link h-x-username" href="https://twitter.com/billy">@billy</a> Looks great</p> - <time class="dt-published" datetime="2014-06-23T14:15:16+0100">2014-06-23 14:15</time>',
-            'date' => '2014-06-23T14:15:16+0100',
+            'date'  => '2014-06-23T14:15:16+0100',
         );
         $this->assertEquals($expected, $parser->replyContent($microformats));
     }
@@ -101,11 +101,11 @@ class ParserTest extends PHPUnit_Framework_TestCase
         $parser = new Parser();
         $microformats = $parser->getMicroformats($html, null);
         $expected = array(
-            'name' => 'Joe Bloggs',
-            'url' => 'http://joebloggs.com/',
-            'photo' => 'http://joebloggs.com/photo.png',
+            'name'   => 'Joe Bloggs',
+            'url'    => 'http://joebloggs.com/',
+            'photo'  => 'http://joebloggs.com/photo.png',
             'repost' => 'http://billy.com/notes/2014/06/22/4/',
-            'date' => '2014-06-24T12:13:14+0000',
+            'date'   => '2014-06-24T12:13:14+0000',
         );
         $this->assertEquals($expected, $parser->repostContent($microformats));
     }
@@ -116,8 +116,8 @@ class ParserTest extends PHPUnit_Framework_TestCase
         $parser = new Parser();
         $microformats = $parser->getMicroformats($html, null);
         $expected = array(
-            'name' => 'Joe Bloggs',
-            'url' => 'http://joebloggs.com/',
+            'name'  => 'Joe Bloggs',
+            'url'   => 'http://joebloggs.com/',
             'photo' => 'http://joebloggs.com/photo.png',
         );
         $this->assertEquals($expected, $parser->likeContent($microformats));

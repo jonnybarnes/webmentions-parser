@@ -2,9 +2,9 @@
 
 namespace Jonnybarnes\WebmentionsParser;
 
-use Mf2;
-use Jonnybarnes\WebmentionsParser\Exceptions\ParserException;
 use Jonnybarnes\WebmentionsParser\Exceptions\InvalidMentionException;
+use Jonnybarnes\WebmentionsParser\Exceptions\ParserException;
+use Mf2;
 
 class Parser
 {
