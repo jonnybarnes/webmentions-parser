@@ -43,7 +43,7 @@ class ParserTest extends PHPUnit_Framework_TestCase
         $parser = new Parser();
         $microformats = $parser->getMicroformats($html, null);
         try {
-            $type = $parser->getMentionType($microformats);
+            $parser->getMentionType($microformats);
         } catch (InvalidMentionException $e) {
             return;
         }

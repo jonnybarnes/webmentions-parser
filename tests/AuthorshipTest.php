@@ -16,7 +16,7 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
         $html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_p-author.html');
         $parser = new Parser();
         $auth = new Authorship();
-        $mf = $parser->getMicroformats($html, null);
+        $microformats = $parser->getMicroformats($html, null);
 
         $expected = array(
             'type' => array(
@@ -35,7 +35,7 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
             ),
         );
 
-        $this->assertEquals($expected, $auth->findAuthor($mf));
+        $this->assertEquals($expected, $auth->findAuthor($microformats));
     }
 
     public function testHEntryWithRelAuthorAndHCardWithUUrlPointingToRelAuthorHref()
@@ -128,7 +128,7 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
         $html = file_get_contents($this->dir . '/HTML/h-feed.html');
         $parser = new Parser();
         $auth = new Authorship();
-        $mf = $parser->getMicroformats($html, null);
+        $microformats = $parser->getMicroformats($html, null);
 
         $expected = array(
             'type' => array(
@@ -141,6 +141,6 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
             ),
         );
 
-        $this->assertEquals($expected, $auth->findAuthor($mf));
+        $this->assertEquals($expected, $auth->findAuthor($microformats));
     }
 }
