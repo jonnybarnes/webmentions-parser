@@ -3,7 +3,7 @@
 namespace Jonnybarnes\WebmentionsParser;
 
 use Mf2;
-use Jonnybarnes\WebmentionsParser\AuthorshipParserException;
+use Jonnybarnes\WebmentionsParser\Exceptions\AuthorshipParserException;
 
 class Authorship
 {
