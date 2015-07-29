@@ -182,7 +182,7 @@ class Parser
             'url'   => $authorNorm['url'],
             'photo' => $authorNorm['photo'],
             'reply' => $replyHTML,
-            'date'  => $date
+            'date'  => $date,
         );
     }
 
@@ -207,7 +207,7 @@ class Parser
         return array(
             'name'  => $authorNorm['name'],
             'url'   => $authorNorm['url'],
-            'photo' => $authorNorm['photo']
+            'photo' => $authorNorm['photo'],
         );
     }
 
@@ -240,7 +240,7 @@ class Parser
             'url'    => $authorNorm['url'],
             'photo'  => $authorNorm['photo'],
             'repost' => $url,
-            'date'   => $date
+            'date'   => $date,
         );
     }
 
