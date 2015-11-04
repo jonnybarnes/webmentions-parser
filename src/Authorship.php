@@ -12,6 +12,7 @@ class Authorship
     /*
      * Set up the Guzzle Client dependency for when we may need it
      */
+
     public function __construct($client = null)
     {
         $this->guzzle = ($client) ?: new \GuzzleHttp\Client();
@@ -20,6 +21,7 @@ class Authorship
     /*
      * Parse the mf for the author's h-card, assume a permalink for now
      */
+
     public function findAuthor($mf, $permalink = true)
     {
         //check for h-entry's
