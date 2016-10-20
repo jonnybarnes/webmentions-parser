@@ -254,7 +254,7 @@ class Parser
      */
     protected function normaliseAuthor(array $author, $domain = null)
     {
-        $authorNorm = array('name' => null, 'url' => null, 'photo' => null);
+        $authorNorm = ['name' => null, 'url' => null, 'photo' => null];
         if ($author !== null) {
             $authorNorm['name'] = $author['properties']['name'][0];
             $authorNorm['url'] = $author['properties']['url'][0];

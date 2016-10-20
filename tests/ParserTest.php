@@ -85,13 +85,13 @@ class ParserTest extends PHPUnit_Framework_TestCase
         $html = file_get_contents($this->dir . '/HTML/testReplyContent.html');
         $parser = new Parser();
         $microformats = $parser->getMicroformats($html, null);
-        $expected = array(
+        $expected = [
             'name'  => 'Joe Bloggs',
             'url'   => 'http://joebloggs.com/',
             'photo' => 'http://joebloggs.com/photo.png',
             'reply' => '<p><a class="auto-link h-x-username" href="https://twitter.com/billy">@billy</a> Looks great</p> - <time class="dt-published" datetime="2014-06-23T14:15:16+0100">2014-06-23 14:15</time>',
             'date'  => '2014-06-23T14:15:16+0100',
-        );
+        ];
         $this->assertEquals($expected, $parser->replyContent($microformats));
     }
 
