@@ -100,13 +100,13 @@ class ParserTest extends PHPUnit_Framework_TestCase
         $html = file_get_contents($this->dir . '/HTML/testRepostContent.html');
         $parser = new Parser();
         $microformats = $parser->getMicroformats($html, null);
-        $expected = array(
+        $expected = [
             'name'   => 'Joe Bloggs',
             'url'    => 'http://joebloggs.com/',
             'photo'  => 'http://joebloggs.com/photo.png',
             'repost' => 'http://billy.com/notes/2014/06/22/4/',
             'date'   => '2014-06-24T12:13:14+0000',
-        );
+        ];
         $this->assertEquals($expected, $parser->repostContent($microformats));
     }
 
@@ -115,11 +115,11 @@ class ParserTest extends PHPUnit_Framework_TestCase
         $html = file_get_contents($this->dir . '/HTML/testLikeContent.html');
         $parser = new Parser();
         $microformats = $parser->getMicroformats($html, null);
-        $expected = array(
+        $expected = [
             'name'  => 'Joe Bloggs',
             'url'   => 'http://joebloggs.com/',
             'photo' => 'http://joebloggs.com/photo.png',
-        );
+        ];
         $this->assertEquals($expected, $parser->likeContent($microformats));
     }
 }

@@ -18,22 +18,22 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
         $auth = new Authorship();
         $microformats = $parser->getMicroformats($html, null);
 
-        $expected = array(
-            'type' => array(
+        $expected = [
+            'type' => [
                 'h-card',
-            ),
-            'properties' => array(
-                'name' => array(
+            ],
+            'properties' => [
+                'name' => [
                     'John Doe',
-                ),
-                'url' => array(
+                ],
+                'url' => [
                     'http://example.com/johndoe/',
-                ),
-                'photo' => array(
+                ],
+                'photo' => [
                     'http://www.gravatar.com/avatar/fd876f8cd6a58277fc664d47ea10ad19.jpg?s=80&d=mm',
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         $this->assertEquals($expected, $auth->findAuthor($microformats));
     }
@@ -67,25 +67,25 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
         $parser = new Parser();
         $microformats = $parser->getMicroformats($html, null);
 
-        $expected = array(
-            'type' => array(
+        $expected = [
+            'type' => [
                 'h-card',
-            ),
-            'properties' => array(
-                'name' => array(
+            ],
+            'properties' => [
+                'name' => [
                     'John Doe',
-                ),
-                'url' => array(
+                ],
+                'url' => [
                     'h-card_with_u-url_equal_to_u-uid_equal_to_self.html',
-                ),
-                'uid' => array(
+                ],
+                'uid' => [
                     'h-card_with_u-url_equal_to_u-uid_equal_to_self.html',
-                ),
-                'photo' => array(
+                ],
+                'photo' => [
                     'http://www.gravatar.com/avatar/fd876f8cd6a58277fc664d47ea10ad19.jpg?s=80&d=mm',
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         $this->assertEquals($expected, $auth->findAuthor($microformats));
     }
@@ -103,22 +103,22 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
         $parser = new Parser();
         $microformats = $parser->getMicroformats($html, null);
 
-        $expected = array(
-            'type' => array(
+        $expected = [
+            'type' => [
                 'h-card',
-            ),
-            'properties' => array(
-                'name' => array(
+            ],
+            'properties' => [
+                'name' => [
                     'John Doe',
-                ),
-                'url' => array(
+                ],
+                'url' => [
                     'h-card_with_u-url_that_is_also_rel-me.html',
-                ),
-                'photo' => array(
+                ],
+                'photo' => [
                     'http://www.gravatar.com/avatar/fd876f8cd6a58277fc664d47ea10ad19.jpg?s=80&d=mm',
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         $this->assertEquals($expected, $auth->findAuthor($microformats));
     }
@@ -130,16 +130,16 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
         $auth = new Authorship();
         $microformats = $parser->getMicroformats($html, null);
 
-        $expected = array(
-            'type' => array(
+        $expected = [
+            'type' => [
                 'h-card',
-            ),
-            'properties' => array(
-                'name' => array(
+            ],
+            'properties' => [
+                'name' => [
                     'Joe Bloggs',
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         $this->assertEquals($expected, $auth->findAuthor($microformats));
     }

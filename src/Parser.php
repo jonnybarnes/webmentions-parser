@@ -177,13 +177,13 @@ class Parser
         }
         $authorNorm = $this->normaliseAuthor($author, $domain);
 
-        return array(
+        return [
             'name'  => $authorNorm['name'],
             'url'   => $authorNorm['url'],
             'photo' => $authorNorm['photo'],
             'reply' => $replyHTML,
             'date'  => $date,
-        );
+        ];
     }
 
     /**
@@ -204,11 +204,11 @@ class Parser
         }
         $authorNorm = $this->normaliseAuthor($author, $domain);
 
-        return array(
+        return [
             'name'  => $authorNorm['name'],
             'url'   => $authorNorm['url'],
             'photo' => $authorNorm['photo'],
-        );
+        ];
     }
 
     /**
@@ -235,13 +235,13 @@ class Parser
         }
         $authorNorm = $this->normaliseAuthor($author, $domain);
 
-        return array(
+        return [
             'name'   => $authorNorm['name'],
             'url'    => $authorNorm['url'],
             'photo'  => $authorNorm['photo'],
             'repost' => $url,
             'date'   => $date,
-        );
+        ];
     }
 
     /**
