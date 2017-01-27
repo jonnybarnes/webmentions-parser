@@ -15,7 +15,7 @@ class Authorship
 
     public function __construct($client = null)
     {
-        $this->guzzle = ($client) ?: new \GuzzleHttp\Client();
+        $this->guzzle = $client ?? new \GuzzleHttp\Client();
     }
 
     /*
@@ -77,6 +77,10 @@ class Authorship
             if (is_array($this->author)) {
                 if (array_search('h-card', $this->author) !== false) {
                     return $this->normalise($this->author);
+                }
+                //flatten if single string entry
+                if (count($this->author) == 1 && is_string($this->author[0])) {
+                    $this->author = $this->author[0];
                 }
             }
 

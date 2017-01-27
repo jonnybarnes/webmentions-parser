@@ -1,0 +1,761 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aaron Parecki</title>
+    <link rel="webmention" href="https://webmention.io/aaronpk/webmention">
+    <link rel="openid.delegate" href="https://aaronparecki.com/">
+    <link rel="openid.server" href="https://openid.indieauth.com/openid">
+      <link rel="feed" href="/syndicated">
+  <link rel="feed" href="/all">
+  <link rel="alternate" type="application/atom+xml" href="https://granary-demo.appspot.com/url?input=html&amp;output=atom&amp;url=https://aaronparecki.com/">
+  <script src="/assets/homepage-streaming.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "url": "https://aaronparecki.com/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://aaronparecki.com/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+    <link rel="authorization_endpoint" href="https://aaronparecki.com/auth">
+    <link rel="token_endpoint" href="https://aaronparecki.com/auth/token">
+    <link rel="micropub" href="https://aaronparecki.com/micropub">
+    <link rel="stylesheet" type="text/css" href="/semantic/2.2.6/semantic.min.css">
+    <script src="/assets/jquery-1.12.0.min.js"></script>
+    <script src="/semantic/2.2.6/semantic.min.js"></script>
+    <link rel="stylesheet" href="/assets/icomoon/style.css">
+    <link rel="stylesheet" href="/assets/weather-icons/css/weather-icons.css">
+    <script src="/assets/featherlight-1.5.0/featherlight.min.js"></script>
+    <link rel="stylesheet" href="/assets/featherlight-1.5.0/featherlight.min.css">
+    <link rel="stylesheet" href="/assets/admin.css">
+    <link rel="stylesheet" href="/assets/styles.css">
+    <link rel="stylesheet" href="/site/styles.css">
+    <link rel="stylesheet" href="/assets/carbon.css">
+    <script src="/assets/photo-albums/justified-layout.js"></script>
+    <script src="/assets/photo-albums/photo-layout.js"></script>
+  </head>
+  <body>
+
+    <div class="sticky-footer-content">
+      <div class="top-bar">
+        <div class="ui container">
+          <form action="/search" method="get" class="search item">
+            <div class="ui icon input">
+              <input type="text" name="q" placeholder="Search..." value="">
+              <i class="search icon"></i>
+            </div>
+          </form>
+                      <span class="item">42&deg;F</span>
+            <span class="weather item">
+              <i class="wi wi-day-cloudy" title="Partly Cloudy in Portland"></i>
+            </span>
+                                <span class="time item">10:06am</span>
+                                <span class="battery item" title="100%, last updated 9:54am"><span class="battery-icon" style="background-position: -0px 0;"></span></span>
+                    <div id="logged-in-menu"></div>
+        </div>
+      </div>
+        <div class="ui container">
+
+<div class="h-card">
+  <div class="subfooter homepage-about">
+    <div class="site-header homepage-coverphoto">
+      <div></div>
+      <h1>Aaron Parecki</h1>
+    </div>
+    <div class="about">
+      <div class="image"><a href="/" class="u-url u-uid"><img src="/images/profile.jpg" class="u-photo"></a></div>
+      <div class="bio">
+        <div class="p-note">
+          <p>Hi, I'm <span class="p-name">Aaron<span style="display:none;"> Parecki</span></span>,  co-founder of
+<a class="p-org h-card" href="https://indieweb.org/">IndieWebCamp</a>.
+I maintain <a class="p-org h-card" href="https://oauth.net/">oauth.net</a>, <a href="https://www.oauth.com/">write and consult about OAuth</a>, and
+am the editor of the W3C <a href="https://www.w3.org/TR/webmention/">Webmention</a> and <a href="https://www.w3.org/TR/micropub/">Micropub</a> specifications, and co-editor of <a href="https://www.w3.org/TR/websub/">WebSub</a>.</p>
+
+<p>I've been <a href="/gps/">tracking my location</a> since 2008,
+and write down everything I <a href="/ate">eat</a> and <a href="/drank">drink</a>.
+I've <a href="/presentations">spoken</a> at conferences around the world about
+<a href="/presentations?tag=indieweb">owning your data</a>,
+<a href="/presentations?tag=oauth">OAuth</a>,
+<a href="/presentations?tag=quantifiedself">quantified self</a>,
+and explained <a href="https://www.youtube.com/watch?v=FGVJ0eXTRpw">why R is a vowel</a>.</p> <time class="dt-bday" datetime="--12-28"></time>        </div>
+      </div>
+      <div>
+        <div class="orgs">
+          <ul>
+            <li class="p-org h-card">
+              <img src="/images/indiewebcamp.png" alt="" class="u-photo">
+              <a href="https://indieweb.org/" class="u-url">
+                <span class="p-name">IndieWebCamp</span>
+              </a>
+              <a class="p-role" href="https://indieweb.org/founders">Founder</a>
+            </li>
+            <li class="p-org h-card">
+              <img src="/images/w3c.png" alt="" class="u-photo">
+              <a href="https://www.w3.org/" class="u-url">
+                <span class="p-name">W3C</span>
+              </a>
+              <a class="p-role" href="/w3c/">Editor</a>
+            </li>
+            <li>
+              <img src="/images/microphone.png" alt="">
+              <a class="p-callsign u-url" href="https://w7apk.com">W7APK</a>
+            </li>
+            <li>These are a few of <a href="https://aaronparecki.com/favorite-things/">my favorite things</a>.</li>
+          </ul>
+
+<link rel="pgpkey" href="/key.txt">
+<link rel="me" href="sms:+15035678642">
+<link rel="me" href="https://aaronparecki.com/">        </div>
+        <div class="sparklines">
+          <ul>
+                          <li>
+                <span style="width:80px; display:inline-block;"><svg xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                 xmlns:ev="http://www.w3.org/2001/xml-events"
+                 version="1.1"
+                 baseProfile="full"
+                 width="100%" height="10"
+                 viewBox="0 -0.5 80 10"
+                 preserveAspectRatio="none"
+                 numPoints="60"><polyline stroke="rgba(0,0,0,0.7)" fill="none" points="0,6 1.3,9 2.7,9 4,9 5.3,9 6.7,9 8,9 9.3,9 10.7,7 12,8 13.3,8 14.7,8 16,9 17.3,9 18.7,9 20,9 21.3,9 22.7,9 24,8 25.3,8 26.7,9 28,9 29.3,9 30.7,9 32,8 33.3,7 34.7,8 36,9 37.3,9 38.7,8 40,9 41.3,9 42.7,8 44,9 45.3,9 46.7,9 48,9 49.3,9 50.7,8 52,9 53.3,9 54.7,7 56,9 57.3,9 58.7,9 60,8 61.3,9 62.7,9 64,8 65.3,9 66.7,9 68,9 69.3,9 70.7,7 72,4 73.3,1 74.7,1 76,0 77.3,2 78.7,3"/></svg></span>
+                <a href="/articles">251 Articles</a>
+              </li>
+                          <li>
+                <span style="width:80px; display:inline-block;"><svg xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                 xmlns:ev="http://www.w3.org/2001/xml-events"
+                 version="1.1"
+                 baseProfile="full"
+                 width="100%" height="10"
+                 viewBox="0 -0.5 80 10"
+                 preserveAspectRatio="none"
+                 numPoints="53"><polyline stroke="rgba(0,0,0,0.7)" fill="none" points="0,6.4 1.5,5.1 3,6.9 4.5,6 6,6.9 7.5,6.4 9.1,7.3 10.6,6.9 12.1,7.3 13.6,7.7 15.1,9 16.6,9 18.1,6.4 19.6,8.1 21.1,8.1 22.6,3.4 24.2,6 25.7,7.3 27.2,7.3 28.7,4.7 30.2,2.1 31.7,7.7 33.2,6 34.7,6.9 36.2,5.6 37.7,6.9 39.2,7.3 40.8,5.1 42.3,5.1 43.8,5.1 45.3,6.9 46.8,5.1 48.3,7.3 49.8,6 51.3,5.6 52.8,2.6 54.3,5.1 55.8,4.3 57.4,3 58.9,0.4 60.4,0 61.9,5.6 63.4,5.6 64.9,8.1 66.4,5.6 67.9,4.3 69.4,3.4 70.9,6.9 72.5,6.4 74,5.6 75.5,5.1 77,4.7 78.5,6.4"/></svg></span>
+                <a href="/bookmarks">2611 Bookmarks</a>
+              </li>
+                          <li>
+                <span style="width:80px; display:inline-block;"><svg xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                 xmlns:ev="http://www.w3.org/2001/xml-events"
+                 version="1.1"
+                 baseProfile="full"
+                 width="100%" height="10"
+                 viewBox="0 -0.5 80 10"
+                 preserveAspectRatio="none"
+                 numPoints="55"><polyline stroke="rgba(0,0,0,0.7)" fill="none" points="0,6.5 1.5,3.3 2.9,6.5 4.4,8.2 5.8,7.4 7.3,9 8.7,9 10.2,6.5 11.6,7.4 13.1,7.4 14.5,4.9 16,2.5 17.5,0 18.9,5.7 20.4,5.7 21.8,3.3 23.3,9 24.7,9 26.2,6.5 27.6,6.5 29.1,5.7 30.5,4.1 32,7.4 33.5,9 34.9,9 36.4,9 37.8,9 39.3,7.4 40.7,8.2 42.2,7.4 43.6,6.5 45.1,7.4 46.5,8.2 48,6.5 49.5,7.4 50.9,6.5 52.4,1.6 53.8,4.1 55.3,5.7 56.7,4.9 58.2,4.1 59.6,7.4 61.1,6.5 62.5,5.7 64,6.5 65.5,7.4 66.9,2.5 68.4,7.4 69.8,2.5 71.3,7.4 72.7,7.4 74.2,5.7 75.6,4.9 77.1,5.7 78.5,6.5"/></svg></span>
+                <a href="/notes">2689 Notes</a>
+              </li>
+                          <li>
+                <span style="width:80px; display:inline-block;"><svg xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                 xmlns:ev="http://www.w3.org/2001/xml-events"
+                 version="1.1"
+                 baseProfile="full"
+                 width="100%" height="10"
+                 viewBox="0 -0.5 80 10"
+                 preserveAspectRatio="none"
+                 numPoints="53"><polyline stroke="rgba(0,0,0,0.7)" fill="none" points="0,7 1.5,6 3,8 4.5,5 6,8 7.5,0 9.1,1 10.6,7 12.1,6 13.6,6 15.1,7 16.6,7 18.1,5 19.6,5 21.1,6 22.6,5 24.2,8 25.7,6 27.2,3 28.7,7 30.2,4 31.7,4 33.2,4 34.7,4 36.2,4 37.7,5 39.2,8 40.8,3 42.3,4 43.8,3 45.3,3 46.8,6 48.3,1 49.8,1 51.3,2 52.8,6 54.3,5 55.8,6 57.4,6 58.9,5 60.4,5 61.9,1 63.4,6 64.9,4 66.4,6 67.9,5 69.4,3 70.9,5 72.5,5 74,2 75.5,9 77,9 78.5,4"/></svg></span>
+                <a href="/photos">1158 Photos</a>
+              </li>
+                          <li>
+                <span style="width:80px; display:inline-block;"><svg xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                 xmlns:ev="http://www.w3.org/2001/xml-events"
+                 version="1.1"
+                 baseProfile="full"
+                 width="100%" height="10"
+                 viewBox="0 -0.5 80 10"
+                 preserveAspectRatio="none"
+                 numPoints="54"><polyline stroke="rgba(0,0,0,0.7)" fill="none" points="0,4.1 1.5,0.8 3,5.6 4.4,3 5.9,2.6 7.4,6.8 8.9,7.5 10.4,2.6 11.9,3.8 13.3,6.4 14.8,7.1 16.3,6 17.8,7.9 19.3,4.9 20.7,9 22.2,9 23.7,2.6 25.2,2.6 26.7,1.9 28.1,2.3 29.6,3.4 31.1,2.3 32.6,2.6 34.1,1.5 35.6,4.9 37,3 38.5,2.3 40,3.8 41.5,4.9 43,3 44.4,1.9 45.9,5.6 47.4,3 48.9,4.1 50.4,8.6 51.9,3 53.3,3.8 54.8,1.5 56.3,4.5 57.8,0 59.3,4.9 60.7,0.4 62.2,4.1 63.7,4.9 65.2,4.5 66.7,6 68.1,7.1 69.6,5.3 71.1,4.5 72.6,7.5 74.1,9 75.6,9 77,9 78.5,7.5"/></svg></span>
+                <a href="/rides">2281 Rides</a>
+              </li>
+                      </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="featured-content-row">
+  <div class="featured-content-section">
+    <h3>Backpedal Productions</h3>
+    <a href="https://backpedal.tv/"><img src="/images/youtube-players.png" style="width: 100%;"></a>
+  </div>
+  <div class="featured-content-section">
+    <h3>Building OAuth 2.0 Servers</h3>
+    <a href="https://www.oauth.com/"><img src="/images/oauth-thin.jpg" style="width: 100%;"></a>
+  </div>
+</div>
+      <div class="post-previews">
+      <div class="item">
+        <div class="item-content">
+                                    <a href="https://aaronparecki.com/2017/01/27/7/sleep">
+                <img src="/2017/01/27/7/sleep.svg" height="60" class="photo">
+              </a>
+                        <div>
+              <a href="https://aaronparecki.com/2017/01/27/7/sleep">
+                Slept  4h 25m
+              </a>
+            </div>
+            <div>10:15pm
+            -
+            5:45am
+            </div>
+                  </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+                      <a href="https://aaronparecki.com/2017/01/27/1/">
+                                                <img src="/assets/icons/food/fork-knife.svg" width="60">
+                                            <div>Tacos</div>
+              <div>6:13am</div>
+            </a>
+                  </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+                      <a href="https://aaronparecki.com/2017/01/24/11/">
+              <img src="/2017/01/24/11/photo.jpg" class="photo">
+            </a>
+                  </div>
+      </div>
+      <div class="item">
+        <div class="item-content event-item">
+                      <b style="font-size: 1.3em;"><a href="https://aaronparecki.com/2017/02/06/1/">Beer of Trust Key-Signing</a></b>
+            <div class="block-with-icon">
+              <div class="left-icon">
+                <div class="date-block">
+                  <div class="month">Feb</div>
+                  <div class="day">6</div>
+                </div>
+                                        </div>
+            </div>
+
+            <div>
+              <!--
+              February 6, 2017<br>
+              -->
+              <time class="dt-start" datetime="2017-02-06T18:00:00-08:00">6:00pm</time> - <time class="dt-end" datetime="2017-02-06T20:00:00-08:00">8:00pm (-0800)</time>
+            </div>
+                  </div>
+      </div>
+    </div>
+
+  <div class="post-list">
+                    <ul>
+      <li class="h-entry post-entry    post" id="post-id-29405">
+      <div style="" class="content-area    ">
+                <div class="pad">
+        <div class="post-text e-content p-name content-type-plain">It's that time again, my 8th <a href="https://twitter.com/Jawbone">@Jawbone</a> is dying. Does the automatic sleep tracking on <a href="https://twitter.com/FitBit">@FitBit</a> actually work now?</div>
+      </div>
+            <div class="metaline pad">
+  <i class="marker icon"></i>
+      <span class="p-location h-adr">
+          <span class="p-locality">Portland</span>,
+        <span class="p-region">Oregon</span>
+                <data class="p-latitude" value="45.535533968885"></data>
+      <data class="p-longitude" value="-122.62136995888"></data>
+      </span>
+  </div>
+
+      <div class="metaline responses-summary pad">
+            <span><i class="comment outline icon"></i> 9 replies</span>
+      </div>
+    <div class="metaline tags pad" style="float: right;">
+      #<a href="/tag/quantifiedself" class="p-category">quantifiedself</a>
+      #<a href="/tag/jawbone" class="p-category">jawbone</a>
+      #<a href="/tag/fitbit" class="p-category">fitbit</a>
+  </div>
+    <div class="metaline pad">
+      <a href="https://aaronparecki.com/2017/01/27/6/jawbone" class="u-url">
+      <time class="dt-published" datetime="2017-01-27T07:37:19-08:00">
+        Fri, Jan 27, 2017 7:37am -08:00
+      </time>
+    </a>
+        <span class="syndications">
+              <a href="https://twitter.com/aaronpk/status/825005009230127104" class="u-syndication syndication"><i class="twitter icon"></i></a>
+          </span>
+    </div>
+<a class="u-author" href="/"></a>
+
+  <div style="clear:both;"></div>
+</div>
+  </li>
+  <li class="h-entry post-entry    post" id="post-id-29388">
+      <div style="" class="content-area    ">
+                <div class="pad">
+        <div class="post-text e-content p-name content-type-plain">Day 37. I liked the way the maj9 chord resolved in this synth patch, so I built up the rest of the song around that. The background piano is doubled at a 1/8 step out of tune. I used the same compressor trick to help add rhythm to the background tracks too. I'm starting to run out of new video filters to use for these, I wonder how I'm going to make it to 100.</div>
+      </div>
+        <div class="video-overlay">
+      <a href="https://aaronparecki.com/2017/01/26/13/day37"><div class="overlay-image"></div></a>
+      <img src="/2017/01/26/13/photo.jpg" class="u-poster u-photo post-img">
+    </div>
+    <a class="u-video" href="/2017/01/26/13/video.mp4"></a>
+          <a class="u-audio" href="/2017/01/26/13/audio.mpga"></a>
+          <div class="metaline pad">
+  <i class="marker icon"></i>
+      <span class="p-location h-adr">
+          <span class="p-locality">Portland</span>,
+        <span class="p-region">Oregon</span>
+                <data class="p-latitude" value="45.535569174789"></data>
+      <data class="p-longitude" value="-122.62124204655"></data>
+      </span>
+  </div>
+
+      <div class="metaline responses-summary pad">
+      <span><i class="star empty icon"></i> 2 likes</span>
+              <span><i class="file text outline icon"></i> 1 mention</span>
+    </div>
+    <div class="metaline tags pad" style="float: right;">
+      #<a href="/tag/100daysofmusic" class="p-category">100daysofmusic</a>
+  </div>
+    <div class="metaline pad">
+      <a href="https://aaronparecki.com/2017/01/26/13/day37" class="u-url">
+      <time class="dt-published" datetime="2017-01-26T15:56:38-08:00">
+        Thu, Jan 26, 2017 3:56pm -08:00
+      </time>
+    </a>
+        <span class="syndications">
+              <a href="https://www.facebook.com/aaronpk/videos/10102997376864646" class="u-syndication syndication"><i class="facebook square icon"></i></a>
+              <a href="https://twitter.com/100daysof_music/status/824768053086871552
+" class="u-syndication syndication"><i class="twitter icon"></i></a>
+              <a href="http://soundcloud.com/aaronpk/day-37
+" class="u-syndication syndication"><i class="soundcloud icon"></i></a>
+          </span>
+    </div>
+<a class="u-author" href="/"></a>
+
+  <div style="clear:both;"></div>
+</div>
+  </li>
+  <li class="h-entry post-entry    post" id="post-id-29386">
+      <div style="" class="content-area    ">
+                <div class="pad">
+        <div class="post-text e-content p-name content-type-plain">I really appreciate the amount of work that went into this joke. <a href="https://twitter.com/lebenseuche/status/824665931301482496"><span class="protocol">https://</span>twitter.com/lebenseuche/status/824665931301482496</a></div>
+      </div>
+            <div class="metaline pad">
+  <i class="marker icon"></i>
+      <span class="p-location h-adr">
+          <span class="p-locality">Portland</span>,
+        <span class="p-region">Oregon</span>
+                <data class="p-latitude" value="45.535536514549"></data>
+      <data class="p-longitude" value="-122.62137010218"></data>
+      </span>
+  </div>
+
+      <div class="metaline responses-summary pad">
+      <span><i class="star empty icon"></i> 14 likes</span>
+        <span><i class="retweet icon"></i> 7 reposts</span>
+          </div>
+    <div class="metaline tags pad" style="float: right;">
+      #<a href="/tag/robot" class="p-category">robot</a>
+      #<a href="/tag/captcha" class="p-category">captcha</a>
+  </div>
+    <div class="metaline pad">
+      <a href="https://aaronparecki.com/2017/01/26/11/robot-captcha" class="u-url">
+      <time class="dt-published" datetime="2017-01-26T12:43:08-08:00">
+        Thu, Jan 26, 2017 12:43pm -08:00
+      </time>
+    </a>
+        <span class="syndications">
+              <a href="https://twitter.com/aaronpk/status/824719360572874752" class="u-syndication syndication"><i class="twitter icon"></i></a>
+          </span>
+    </div>
+<a class="u-author" href="/"></a>
+
+  <div style="clear:both;"></div>
+</div>
+  </li>
+  <li class="h-entry post-entry    post" id="post-id-29381">
+      <div style="" class="content-area    ">
+              <div class="pad">
+          <h2 class="p-name">Day 37: Parsing h-recipe with XRay #100DaysOfIndieWebn</h2>
+
+              <div class="metaline"><a href="https://aaronparecki.com/2017/01/26/6/day-37-recipes">Thu, Jan 26, 2017 11:20am -08:00</a></div>
+
+
+      <div class="post-text e-content  "><p class="">XRay now supports the h-recipe vocabulary!</p><div class="medium-insert-images ui-sortable"><figure>
+    <img src="https://aaronparecki.com/2017/01/26/6/image-1.png" alt="" class="ui-sortable-handle">
+
+</figure></div><p class="">Thanks to my refactoring yesterday, this was relatively straightforward. I did consolidate a little more of the code to be able to reuse the part that extracts HTML text. Previously it was only used for the "content" property of h-entry, and now it can be used for additional properties such as h-recipe's "instructions".</p></div>
+        </div>
+        <div class="metaline pad">
+  <i class="marker icon"></i>
+      <span class="p-location h-adr">
+          <span class="p-locality">Portland</span>,
+        <span class="p-region">Oregon</span>
+                <data class="p-latitude" value="45.535551597537"></data>
+      <data class="p-longitude" value="-122.62133287267"></data>
+      </span>
+  </div>
+
+      <div class="metaline responses-summary pad">
+              <span><i class="file text outline icon"></i> 1 mention</span>
+    </div>
+    <div class="metaline tags pad" style="float: right;">
+      #<a href="/tag/100daysofindieweb" class="p-category">100daysofindieweb</a>
+      #<a href="/tag/recipe" class="p-category">recipe</a>
+      #<a href="/tag/xray" class="p-category">xray</a>
+  </div>
+    <div class="metaline pad">
+      <a href="https://aaronparecki.com/2017/01/26/6/day-37-recipes" class="u-url">
+      <time class="dt-published" datetime="2017-01-26T11:20:07-08:00">
+        Thu, Jan 26, 2017 11:20am -08:00
+      </time>
+    </a>
+        <span class="syndications">
+              <a href="https://twitter.com/100daysindieweb/status/824698530577018880" class="u-syndication syndication"><i class="twitter icon"></i></a>
+          </span>
+    </div>
+<a class="u-author" href="/"></a>
+
+  <div style="clear:both;"></div>
+</div>
+  </li>
+  <li class="h-entry post-entry    post" id="post-id-29371">
+      <div style="" class="content-area    ">
+              <div class="pad">
+          <h2 class="p-name">Day 36 - Flying</h2>
+
+              <div class="metaline"><a href="https://aaronparecki.com/2017/01/25/19/day36">Wed, Jan 25, 2017 8:05pm -08:00</a></div>
+
+
+      <div class="post-text e-content  content-type-plain">Day 36. This one's short and sweet. When I replay this in my head I keep thinking about other embellishments I could add. I think if I later expand this I might try some of those ideas, but I didn't want to complicate this version of it. The video is from my flight from Oakland to Portland this morning.</div>
+        </div>
+    <div class="video-overlay">
+      <a href="https://aaronparecki.com/2017/01/25/19/day36"><div class="overlay-image"></div></a>
+      <img src="/2017/01/25/19/photo.jpg" class="u-poster u-photo post-img">
+    </div>
+    <a class="u-video" href="/2017/01/25/19/video.mp4"></a>
+          <a class="u-audio" href="/2017/01/25/19/audio.mpga"></a>
+          <div class="metaline pad">
+  <i class="marker icon"></i>
+      <span class="p-location h-adr">
+          <span class="p-locality">Portland</span>,
+        <span class="p-region">Oregon</span>
+                <data class="p-latitude" value="45.535562142165"></data>
+      <data class="p-longitude" value="-122.62126296074"></data>
+      </span>
+  </div>
+
+      <div class="metaline responses-summary pad">
+      <span><i class="star empty icon"></i> 5 likes</span>
+            <span><i class="comment outline icon"></i> 3 replies</span>
+        <span><i class="file text outline icon"></i> 1 mention</span>
+    </div>
+    <div class="metaline tags pad" style="float: right;">
+      #<a href="/tag/100daysofmusic" class="p-category">100daysofmusic</a>
+  </div>
+    <div class="metaline pad">
+      <a href="https://aaronparecki.com/2017/01/25/19/day36" class="u-url">
+      <time class="dt-published" datetime="2017-01-25T20:05:44-08:00">
+        Wed, Jan 25, 2017 8:05pm -08:00
+      </time>
+    </a>
+        <span class="syndications">
+              <a href="https://www.facebook.com/aaronpk/videos/10102995819969676" class="u-syndication syndication"><i class="facebook square icon"></i></a>
+              <a href="https://twitter.com/100daysof_music/status/824468351451738112
+" class="u-syndication syndication"><i class="twitter icon"></i></a>
+              <a href="http://soundcloud.com/aaronpk/day-36-flying
+" class="u-syndication syndication"><i class="soundcloud icon"></i></a>
+          </span>
+    </div>
+<a class="u-author" href="/"></a>
+
+  <div style="clear:both;"></div>
+</div>
+  </li>
+  <li class="h-entry post-entry    post" id="post-id-29366">
+      <div style="" class="content-area    ">
+              <div class="pad">
+          <h2 class="p-name">Day 36: Parsing h-review with XRay #100DaysOfIndieWeb</h2>
+
+              <div class="metaline"><a href="https://aaronparecki.com/2017/01/25/14/day-36-xray-hreview">Wed, Jan 25, 2017 2:53pm -08:00</a></div>
+
+
+      <div class="post-text e-content  "><p class="">Today I added the <a href="http://microformats.org/wiki/h-review">h-review</a> vocabulary to XRay. This means you may now see objects of "type: review" show up when using XRay.&nbsp;</p><div class="medium-insert-images ui-sortable"><figure>
+    <img src="https://aaronparecki.com/2017/01/25/14/image-1.png" alt="" class="ui-sortable-handle">
+
+</figure></div><p class="">This was going to be a straightforward addition, but I realized that it would have involved duplicating a lot of code in the parsing logic. So I ended up doing quite a bit of refactoring to consolidate the logic of extracting properties from the mf2 objects. This also means it's now a lot easier to add new vocabularies as well! In fact, while adding h-review, I had to also add h-product, in order for the reviewed item to show up correctly.&nbsp;</p><p class="">The only remaining issue with this is that the PHP mf2 parser has some issues with backcompat parsing for Microformats 1's hReview, so those end up looking messy right now. Once that's <a href="https://github.com/indieweb/php-mf2/issues/107">fixed</a> in the parser, XRay will work with hReview as well!</p></div>
+        </div>
+        <div class="metaline pad">
+  <i class="marker icon"></i>
+      <span class="p-location h-adr">
+          <span class="p-locality">Portland</span>,
+        <span class="p-region">Oregon</span>
+                <data class="p-latitude" value="45.535553518215"></data>
+      <data class="p-longitude" value="-122.62133916792"></data>
+      </span>
+  </div>
+
+      <div class="metaline responses-summary pad">
+      <span><i class="star empty icon"></i> 1 like</span>
+              <span><i class="file text outline icon"></i> 1 mention</span>
+    </div>
+    <div class="metaline tags pad" style="float: right;">
+      #<a href="/tag/100daysofindieweb" class="p-category">100daysofindieweb</a>
+      #<a href="/tag/xray" class="p-category">xray</a>
+      #<a href="/tag/mf2" class="p-category">mf2</a>
+  </div>
+    <div class="metaline pad">
+      <a href="https://aaronparecki.com/2017/01/25/14/day-36-xray-hreview" class="u-url">
+      <time class="dt-published" datetime="2017-01-25T14:53:04-08:00">
+        Wed, Jan 25, 2017 2:53pm -08:00
+      </time>
+    </a>
+        <span class="syndications">
+              <a href="https://twitter.com/100daysindieweb/status/824389844977618944" class="u-syndication syndication"><i class="twitter icon"></i></a>
+          </span>
+    </div>
+<a class="u-author" href="/"></a>
+
+  <div style="clear:both;"></div>
+</div>
+  </li>
+  <li class="h-entry post-entry    post" id="post-id-29362">
+      <div style="" class="content-area    ">
+                <div class="pad">
+        <div class="post-text e-content p-name content-type-plain">That feeling of finally letting a domain expire for a project you never launched.</div>
+      </div>
+            <div class="metaline pad">
+  <i class="marker icon"></i>
+      <span class="p-location h-adr">
+          <span class="p-locality">Portland</span>,
+        <span class="p-region">Oregon</span>
+                <data class="p-latitude" value="45.535556799156"></data>
+      <data class="p-longitude" value="-122.62132595048"></data>
+      </span>
+  </div>
+
+      <div class="metaline responses-summary pad">
+      <span><i class="star empty icon"></i> 12 likes</span>
+        <span><i class="retweet icon"></i> 5 reposts</span>
+          </div>
+    <div class="metaline tags pad" style="float: right;">
+      #<a href="/tag/domains" class="p-category">domains</a>
+  </div>
+    <div class="metaline pad">
+      <a href="https://aaronparecki.com/2017/01/25/10/domains" class="u-url">
+      <time class="dt-published" datetime="2017-01-25T13:21:59-08:00">
+        Wed, Jan 25, 2017 1:21pm -08:00
+      </time>
+    </a>
+        <span class="syndications">
+              <a href="https://twitter.com/aaronpk/status/824366749759926272" class="u-syndication syndication"><i class="twitter icon"></i></a>
+          </span>
+    </div>
+<a class="u-author" href="/"></a>
+
+  <div style="clear:both;"></div>
+</div>
+  </li>
+  <li class="h-entry post-entry    post" id="post-id-29354">
+      <div style="" class="content-area    ">
+              <div class="pad">
+          <h2 class="p-name">Day 35 - Oak</h2>
+
+              <div class="metaline"><a href="https://aaronparecki.com/2017/01/24/19/day35">Tue, Jan 24, 2017 11:52pm -08:00</a></div>
+
+
+      <div class="post-text e-content  content-type-plain">Day 35. I'm not super happy with this one. I originally had something else in mind, but didn't have the energy tonight to properly get it out of my head. So instead, you get this, which is a strange combination of sounds. You may recognize the pulsing synth sound from yesterday's song as well.</div>
+        </div>
+    <div class="video-overlay">
+      <a href="https://aaronparecki.com/2017/01/24/19/day35"><div class="overlay-image"></div></a>
+      <img src="/2017/01/24/19/photo.jpg" class="u-poster u-photo post-img">
+    </div>
+    <a class="u-video" href="/2017/01/24/19/video.mp4"></a>
+          <a class="u-audio" href="/2017/01/24/19/audio.mpga"></a>
+          <div class="metaline pad">
+  <i class="marker icon"></i>
+      <span class="p-location h-adr">
+          <span class="p-locality">Oakland</span>,
+        <span class="p-region">California</span>
+                <data class="p-latitude" value="37.825809591485"></data>
+      <data class="p-longitude" value="-122.26510972727"></data>
+      </span>
+  </div>
+
+      <div class="metaline responses-summary pad">
+      <span><i class="star empty icon"></i> 2 likes</span>
+            <span><i class="comment outline icon"></i> 1 reply</span>
+        <span><i class="file text outline icon"></i> 1 mention</span>
+    </div>
+    <div class="metaline tags pad" style="float: right;">
+      #<a href="/tag/100daysofmusic" class="p-category">100daysofmusic</a>
+  </div>
+    <div class="metaline pad">
+      <a href="https://aaronparecki.com/2017/01/24/19/day35" class="u-url">
+      <time class="dt-published" datetime="2017-01-24T23:52:21-08:00">
+        Tue, Jan 24, 2017 11:52pm -08:00
+      </time>
+    </a>
+        <span class="syndications">
+              <a href="https://www.facebook.com/aaronpk/videos/10102993881155076" class="u-syndication syndication"><i class="facebook square icon"></i></a>
+          </span>
+    </div>
+<a class="u-author" href="/"></a>
+
+  <div style="clear:both;"></div>
+</div>
+  </li>
+  <li class="h-entry post-entry    post" id="post-id-29349">
+      <div style="" class="content-area    ">
+              <div class="pad">
+          <h2 class="p-name">Day 35: Handling Redirects of Updated Blog Posts #100DaysOfIndieWeb</h2>
+
+              <div class="metaline"><a href="https://aaronparecki.com/2017/01/24/14/day-35-redirects-and-oauth">Tue, Jan 24, 2017 9:26pm -08:00</a></div>
+
+
+      <div class="post-text e-content  "><p class="">My blog post from 2012 titled "OAuth 2 Simplified" is my most popular article on my website by an order of magnitude. It is referenced by over 400 repositories on GitHub, and ranks very high in searches about OAuth. I still get tweets over four years later from people who discover it for the first time and are very appreciative of finding a succinct summary of the protocol. I wrote it in 2012, when OAuth 2.0 was still relatively new, and it was based on the best practices at the time.&nbsp;</p><p class="">Today I was reviewing the post, and realized that there were quite a few places where the industry standards have changed either in the terminology or in the best practices. I decided that I wanted to publish a new version of the post updated for 2017 based on what has happened in the industry over the last few years. I didn't feel comfortable updating the post at its current URL, from 2012, since that seemed like it would be rewriting history. But at the same time, I don't want to make people landing on that post from a web search or link from a GitHub repository to have to click another time to see the latest version of the post.</p><p class="">I decided on an interesting compromise. I took the existing post, rewrote parts of it, and published it at a new URL:&nbsp;<a href="https://aaronparecki.com/oauth-2-simplified/">https://aaronparecki.com/oauth-2-simplified/</a></p><p class="">I then took the old post, copied it verbatim, and published it at a new URL dated the same date as the old post:&nbsp;https://aaronparecki.com/2012/07/29/7/oauth2-simplified</p><p class="">The final step was creating a redirect from the post's old URL&nbsp;https://aaronparecki.com/2012/07/29/2/oauth2-simplified (note the "2" vs the "7") to the new URL that has no date component. (This is the part that required a new bit of code for p3k, in order to handle redirects from posts that would have otherwise matched a post permalink.)</p><p class="">My plan going forward is to always keep the version at&nbsp;https://aaronparecki.com/oauth-2-simplified/ up to date, and to keep snapshots of older versions at date-based permalinks at the time when I publish an updated version. I link to the previous versions of the post at the bottom of the primary post. (Manually for now, until I decide this is an important enough feature to automate).&nbsp;</p><p class="">I think this strike the right balance between providing visitors with the most current information with the least amount of effort, while still preserving the history of the older versions.</p></div>
+        </div>
+        <div class="metaline pad">
+  <i class="marker icon"></i>
+      <span class="p-location h-adr">
+          <span class="p-locality">Oakland</span>,
+        <span class="p-region">California</span>
+                <data class="p-latitude" value="37.80731638897"></data>
+      <data class="p-longitude" value="-122.23928458069"></data>
+      </span>
+  </div>
+
+      <div class="metaline responses-summary pad">
+              <span><i class="file text outline icon"></i> 1 mention</span>
+    </div>
+    <div class="metaline tags pad" style="float: right;">
+      #<a href="/tag/100daysofindieweb" class="p-category">100daysofindieweb</a>
+      #<a href="/tag/oauth" class="p-category">oauth</a>
+  </div>
+    <div class="metaline pad">
+      <a href="https://aaronparecki.com/2017/01/24/14/day-35-redirects-and-oauth" class="u-url">
+      <time class="dt-published" datetime="2017-01-24T21:26:36-08:00">
+        Tue, Jan 24, 2017 9:26pm -08:00
+      </time>
+    </a>
+        <span class="syndications">
+              <a href="https://twitter.com/100daysindieweb/status/824126446876717056" class="u-syndication syndication"><i class="twitter icon"></i></a>
+          </span>
+    </div>
+<a class="u-author" href="/"></a>
+
+  <div style="clear:both;"></div>
+</div>
+  </li>
+  <li class="h-entry post-entry    post" id="post-id-29344">
+      <div style="" class="content-area    ">
+                <div class="pad">
+        <div class="post-text e-content p-name content-type-plain">A stiff drink after a long day</div>
+      </div>
+        <a href="https://aaronparecki.com/2017/01/24/11/"><img src="/2017/01/24/11/photo.jpg" class="u-photo post-img"></a>
+      <div class="metaline pad">
+  <i class="marker icon"></i>
+      <span class="p-location h-adr">
+          <span class="p-locality">Oakland</span>,
+        <span class="p-region">California</span>,
+        <span class="p-country">USA</span>
+              <data class="p-latitude" value="37.811201"></data>
+      <data class="p-longitude" value="-122.266669"></data>
+      </span>
+  </div>
+
+      <div class="metaline responses-summary pad">
+      <span><i class="star empty icon"></i> 7 likes</span>
+            </div>
+        <div class="metaline pad">
+      <a href="https://aaronparecki.com/2017/01/24/11/" class="u-url">
+      <time class="dt-published" datetime="2017-01-24T19:38:41-08:00">
+        Tue, Jan 24, 2017 7:38pm -08:00
+      </time>
+    </a>
+        <span class="syndications">
+              <a href="https://www.instagram.com/p/BPrCxG0FF-G/" class="u-syndication syndication"><i class="instagram icon"></i></a>
+          </span>
+    </div>
+<a class="u-author" href="/"></a>
+
+  <div style="clear:both;"></div>
+</div>
+  </li>
+    </ul>
+        <div class="load-more">
+      <a href="/?before=20170124T193841-0800" class="infinite " rel="prev">load more</a>
+    </div>
+  </div>
+
+
+  </div>
+    </div>
+
+    <footer class="sticky-footer">
+        <div style="margin-top: 1rem;"></div>
+  <div class="ui container">
+    <div class="channels">
+      <ul class="footer-links">
+                  <li><a href="/all">All</a></li>
+                  <li><a href="/articles">Articles</a></li>
+                  <li><a href="/bookmarks">Bookmarks</a></li>
+                  <li><a href="/notes">Notes</a></li>
+                  <li><a href="/photos">Photos</a></li>
+                  <li><a href="/reviews">Reviews</a></li>
+                  <li><a href="/sleep">Sleep</a></li>
+                  <li><a href="/travel">Travel</a></li>
+                <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+        <div class="elsewhere">
+      <ul class="footer-links">
+                  <li><a href="https://twitter.com/aaronpk" rel="me"><img src="/icons/twitter.ico" width="16" height="16"></a></li>
+                  <li><a href="https://twitter.com/w7apk" rel="me"><img src="/icons/twitter.ico" width="16" height="16"></a></li>
+                  <li><a href="https://facebook.com/aaronpk" rel="me"><img src="/icons/facebook.ico" width="16" height="16"></a></li>
+                  <li><a href="https://instagram.com/aaronpk" rel="me"><img src="/icons/instagram.ico" width="16" height="16"></a></li>
+                  <li><a href="http://flickr.com/aaronpk" rel="me"><img src="/icons/flickr.ico" width="16" height="16"></a></li>
+                  <li><a href="https://github.com/aaronpk" rel="me"><img src="/icons/github.ico" width="16" height="16"></a></li>
+                  <li><a href="https://youtube.com/TheAaronpk" rel="me"><img src="/icons/youtube.ico" width="16" height="16"></a></li>
+                  <li><a href="https://google.com/+aaronpk" rel="me"><img src="/icons/googleplus.ico" width="16" height="16"></a></li>
+                  <li><a href="http://foursquare.com/aaronpk" rel="me"><img src="/icons/foursquare.ico" width="16" height="16"></a></li>
+                  <li><a href="http://www.linkedin.com/in/aaronparecki" rel="me"><img src="/icons/linkedin.ico" width="16" height="16"></a></li>
+                  <li><a href="https://alpha.app.net/aaronpk" rel="me"><img src="/icons/appdotnet.ico" width="16" height="16"></a></li>
+                  <li><a href="http://lanyrd.com/people/aaronpk" rel="me"><img src="/icons/lanyrd.ico" width="16" height="16"></a></li>
+                  <li><a href="http://aaronpk.eventbrite.com/" rel="me"><img src="/icons/eventbrite.ico" width="16" height="16"></a></li>
+                  <li><a href="http://www.slideshare.net/aaronpk" rel="me"><img src="/icons/slideshare.ico" width="16" height="16"></a></li>
+                  <li><a href="https://www.beeminder.com/aaronpk" rel="me"><img src="/icons/beeminder.ico" width="16" height="16"></a></li>
+                  <li><a href="http://www.last.fm/user/aaron_pk" rel="me"><img src="/icons/lastfm.ico" width="16" height="16"></a></li>
+                  <li><a href="https://keybase.io/aaronpk/" rel="me"><img src="/icons/keybase.ico" width="16" height="16"></a></li>
+                  <li><a href="https://gratipay.com/~aaronpk/" rel="me payment"><img src="/icons/gratipay.ico" width="16" height="16"></a></li>
+                  <li><a href="https://cash.me/$aaronpk" rel="me payment"><img src="/icons/squarecash.ico" width="16" height="16"></a></li>
+                  <li><a href="https://venmo.com/aaronpk" rel="me payment"><img src="/icons/venmo.ico" width="16" height="16"></a></li>
+                  <li><a href="https://paypal.me/apk" rel="me payment"><img src="/icons/paypal.ico" width="16" height="16"></a></li>
+                  <li><a href="https://www.w3.org/users/59996" rel="me"><img src="/icons/w3.ico" width="16" height="16"></a></li>
+                  <li><a href="http://www.colourlovers.com/lover/aaronpk" rel="me"><img src="/icons/colourlovers.ico" width="16" height="16"></a></li>
+                  <li><a href="mailto:aaron@parecki.com" rel="me"><img src="/icons/email.png" width="16" height="16"></a></li>
+              </ul>
+    </div>
+  </div>
+
+      <div class="footer">
+        <a href="/login" class="hidden-login"></a>
+        <div>
+          <span>&copy; 1999-2017 by Aaron Parecki.</span>
+          <span>Powered by <a href="http://p3k.io/">p3k</a>.</span>
+          <span>This site supports <a href="http://webmention.net/">Webmention</a>.</span>
+        </div>
+        <div>
+          <span>Except where otherwise noted, text content on this site is licensed
+            under a <a href="http://creativecommons.org/licenses/by/3.0/" rel="license">Creative Commons Attribution 3.0 License</a>.</span>
+        </div>
+      </div>
+    </footer>
+
+    <input type="hidden" id="permalink" value="">
+
+    <script src="/assets/script.js"></script>
+    <script src="/assets/webmention.js"></script>
+
+    <script src="/assets/admin.js"></script>
+
+  </body>
+</html>

@@ -143,4 +143,21 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $auth->findAuthor($microformats));
     }
+
+    public function test_aaronpk_authorship_error()
+    {
+        $html = file_get_contents($this->dir . '/HTML/aaronpk.html');
+        $authorhtml = file_get_contents($this->dir . '/HTML/aaronpk.author.html');
+        $mock = new MockHandler([
+            new Response(200, [], $authorhtml),
+        ]);
+        $handler = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handler]);
+        $parser = new Parser();
+        $authorship = new Authorship($client);
+        $microformats = $parser->getMicroformats($html, 'https://aaronparecki.com/2017/01/27/11/');
+        $author = $authorship->findAuthor($microformats);
+
+        $this->assertEquals('Aaron Parecki', $author['properties']['name'][0]);
+    }
 }
