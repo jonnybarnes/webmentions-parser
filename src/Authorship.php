@@ -165,6 +165,10 @@ class Authorship
 
     public function normalise($author)
     {
+        if (is_array($author) === false) {
+            return $author;
+        }
+
         if (array_key_exists(0, $author)) {
             $author = $author[0];
         }
