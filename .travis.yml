@@ -1,10 +1,11 @@
 language: php
 
-php:
-  - 7.0
-  - 7.1
+os: linux
+dist: bionic
 
-sudo: false
+php:
+  - 7.3
+  - 7.4
 
 # Handle git submodules yourself
 git:

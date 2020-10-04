@@ -1,15 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Jonnybarnes\WebmentionsParser\Authorship;
 use Jonnybarnes\WebmentionsParser\Parser;
+use PHPUnit\Framework\TestCase;
 
-class AuthorshipTest extends PHPUnit_Framework_TestCase
+class AuthorshipTest extends TestCase
 {
-    private $dir = __DIR__;
+    /** @var string */
+    private $dir;
+
+    public function setUp(): void
+    {
+        $this->dir = __DIR__;
+    }
 
     public function testHEntryWithPAuthor()
     {
@@ -40,10 +49,10 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
 
     public function testHEntryWithRelAuthorAndHCardWithUUrlPointingToRelAuthorHref()
     {
-        $extrahtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/no_h-card.html');
+        $extraHtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/no_h-card.html');
         $html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_and_h-card_with_u-url_pointing_to_rel-author_href.html');
         $mock = new MockHandler([
-            new Response(200, [], $extrahtml),
+            new Response(200, [], $extraHtml),
         ]);
         $handler = HandlerStack::create($mock);
         $client = new Client(['handler' => $handler]);
@@ -56,10 +65,10 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
 
     public function testHEntryWithRelAuthorPointingToHCardWithUUrlEqualToUUidEqualToSelf()
     {
-        $extrahtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-card_with_u-url_equal_to_u-uid_equal_to_self.html');
+        $extraHtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-card_with_u-url_equal_to_u-uid_equal_to_self.html');
         $html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_pointing_to_h-card_with_u-url_equal_to_u-uid_equal_to_self.html');
         $mock = new MockHandler([
-            new Response(200, [], $extrahtml),
+            new Response(200, [], $extraHtml),
         ]);
         $handler = HandlerStack::create($mock);
         $client = new Client(['handler' => $handler]);
@@ -92,10 +101,10 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
 
     public function testHEntryWithRelAuthorPointingToHCardWithUUrlThatIsAlsoRelMe()
     {
-        $extrahtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-card_with_u-url_that_is_also_rel-me.html');
+        $extraHtml = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-card_with_u-url_that_is_also_rel-me.html');
         $html = file_get_contents($this->dir . '/HTML/authorship-test-cases/h-entry_with_rel-author_pointing_to_h-card_with_u-url_that_is_also_rel-me.html');
         $mock = new MockHandler([
-            new Response(200, [], $extrahtml),
+            new Response(200, [], $extraHtml),
         ]);
         $handler = HandlerStack::create($mock);
         $client = new Client(['handler' => $handler]);
@@ -147,9 +156,9 @@ class AuthorshipTest extends PHPUnit_Framework_TestCase
     public function test_aaronpk_authorship_error()
     {
         $html = file_get_contents($this->dir . '/HTML/aaronpk.html');
-        $authorhtml = file_get_contents($this->dir . '/HTML/aaronpk.author.html');
+        $authorHtml = file_get_contents($this->dir . '/HTML/aaronpk.author.html');
         $mock = new MockHandler([
-            new Response(200, [], $authorhtml),
+            new Response(200, [], $authorHtml),
         ]);
         $handler = HandlerStack::create($mock);
         $client = new Client(['handler' => $handler]);
