@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jonnybarnes\WebmentionsParser;
 
+use Exception;
+use Jonnybarnes\WebmentionsParser\Exceptions\AuthorshipParserException;
 use Jonnybarnes\WebmentionsParser\Exceptions\InvalidMentionException;
 use Jonnybarnes\WebmentionsParser\Exceptions\ParserException;
-use Mf2;
+use function Mf2\parse;
 
 class Parser
 {
@@ -12,17 +16,16 @@ class Parser
      * What we really want to parse are the microformats, but here's a starter
      * method to deal with the original HTML.
      *
-     * @param  string  The HTML
-     * @param  string  The domain the HTML is from
-     *
+     * @param string The HTML
+     * @param string|null The domain the HTML is from
      * @return array The parsed microformats
+     * @throws ParserException
      */
-    public function getMicroformats($html, $domain)
+    public function getMicroformats(string $html, ?string $domain): array
     {
         try {
-            $microformats = \Mf2\parse($html, $domain);
-        } catch (Exception $e) {
-            //log $e maybe?
+            $microformats = parse($html, $domain);
+        } catch (Exception $exception) {
             throw new ParserException('php-mf2 failed to parse the HTML');
         }
 
@@ -32,11 +35,11 @@ class Parser
     /**
      * Return the type of mention or throw an error if undetermined.
      *
-     * @param  array  The microformats
-     *
+     * @param array The microformats
      * @return string The mention type
+     * @throws InvalidMentionException
      */
-    public function getMentionType(array $microformats)
+    public function getMentionType(array $microformats): string
     {
         if ($this->arrayKeyExistsRecursive('in-reply-to', $microformats)) {
             return 'in-reply-to';
@@ -48,21 +51,21 @@ class Parser
             return 'repost-of';
         }
 
-        //can't determine what type of mention it is, throw exception
+        // Can’t determine what type of mention it is, throw exception
         throw new InvalidMentionException();
     }
 
     /**
      * Check a mention is to the intended target.
      *
-     * @param  array  The microformats
-     * @param  string The URL of the target
-     *
+     * @param array The microformats
+     * @param string The URL of the target
      * @return bool
      */
-    public function checkInReplyTo(array $microformats, $target)
+    public function checkInReplyTo(array $microformats, string $target): bool
     {
         $items = $microformats['items'];
+
         foreach ($items as $item) {
             $properties = $item['properties'];
             if (array_key_exists('in-reply-to', $properties)) {
@@ -72,7 +75,7 @@ class Parser
                     }
                 }
                 foreach ($properties['in-reply-to'] as $url) {
-                    if ($url == $target) {
+                    if ($url === $target) {
                         return true;
                     }
                 }
@@ -85,18 +88,19 @@ class Parser
     /**
      * Check the microformats contain a like for the target.
      *
-     * @param  array  The microformats
-     * @param  string The target domain
-     *
+     * @param array The microformats
+     * @param string The target domain
      * @return bool
      */
-    public function checkLikeOf(array $microformats, $target)
+    public function checkLikeOf(array $microformats, string $target): bool
     {
         $likeOf = (isset($microformats['items'][0]['properties']['like-of']))
-            ? $microformats['items'][0]['properties']['like-of'] : null;
+            ? $microformats['items'][0]['properties']['like-of']
+            : null;
+
         if ($likeOf) {
             foreach ($likeOf as $url) {
-                if ($url == $target) {
+                if ($url === $target) {
                     return true;
                 }
             }
@@ -106,20 +110,21 @@ class Parser
     }
 
     /**
-     * Check the microformats contain a reposdt of the target.
+     * Check the microformats contain a repost of the target.
      *
-     * @param  array  The microformats
-     * @param  string The target domain
-     *
+     * @param array The microformats
+     * @param string The target domain
      * @return bool
      */
-    public function checkRepostOf(array $microformats, $target)
+    public function checkRepostOf(array $microformats, string $target): bool
     {
         $repostOf = (isset($microformats['items'][0]['properties']['repost-of']))
-            ? $microformats['items'][0]['properties']['repost-of'] : null;
+            ? $microformats['items'][0]['properties']['repost-of']
+            : null;
+
         if ($repostOf) {
             foreach ($repostOf as $url) {
-                if ($url == $target) {
+                if ($url === $target) {
                     return true;
                 }
             }
@@ -130,17 +135,23 @@ class Parser
 
     /**
      * Our recursive array_key_exists function.
+     * @param string $needle
+     * @param array $haystack
+     * @return bool
      */
-    private function arrayKeyExistsRecursive($needle, $haystack)
+    private function arrayKeyExistsRecursive(string $needle, array $haystack): bool
     {
         $result = array_key_exists($needle, $haystack);
+
         if ($result) {
             return $result;
         }
+
         foreach ($haystack as $v) {
             if (is_array($v)) {
                 $result = $this->arrayKeyExistsRecursive($needle, $v);
             }
+
             if ($result) {
                 return $result;
             }
@@ -152,22 +163,25 @@ class Parser
     /**
      * Now we actually parse the mf2 for desired data. In this case replies.
      *
-     * @param  array  The microformats
-     * @param  string The source domain
-     *
+     * @param array The microformats
+     * @param string|null The source domain
      * @return array The reply content
+     * @throws ParserException
      */
-    public function replyContent(array $microformats, $domain = null)
+    public function replyContent(array $microformats, $domain = null): array
     {
         $replyHTML = (isset($microformats['items'][0]['properties']['content'][0]['html']))
-            ? trim($microformats['items'][0]['properties']['content'][0]['html']) : null;
+            ? trim($microformats['items'][0]['properties']['content'][0]['html'])
+            : null;
+
         if ($replyHTML === null) {
             //if there is no actual reply content...
-            throw new ParsingException('No reply content found');
+            throw new ParserException('No reply content found');
         }
 
         $date = (isset($microformats['items'][0]['properties']['published'][0]))
-            ? $microformats['items'][0]['properties']['published'][0] : date('Y-m-d H:i:s \U\T\CO');
+            ? $microformats['items'][0]['properties']['published'][0]
+            : date('Y-m-d H:i:s \U\T\CO');
 
         $authorship = new Authorship();
         try {
@@ -189,17 +203,16 @@ class Parser
     /**
      * Parse the mf2 for desired like content.
      *
-     * @param  array  The microformats
-     * @param  string The source domain
-     *
+     * @param array The microformats
+     * @param string|null The source domain
      * @return array The like content
      */
-    public function likeContent(array $microformats, $domain = null)
+    public function likeContent(array $microformats, $domain = null): array
     {
         $authorship = new Authorship();
         try {
             $author = $authorship->findAuthor($microformats);
-        } catch (AuthorshipParserException $e) {
+        } catch (AuthorshipParserException $exception) {
             $author = null;
         }
         $authorNorm = $this->normaliseAuthor($author, $domain);
@@ -214,23 +227,24 @@ class Parser
     /**
      * Parse the mf2 for desired repost content.
      *
-     * @param  array  The microformats
-     * @param  string The source domain
-     *
+     * @param array The microformats
+     * @param string|null The source domain
      * @return array The repost content
      */
-    public function repostContent(array $microformats, $domain = null)
+    public function repostContent(array $microformats, $domain = null): array
     {
         $url = (isset($microformats['items'][0]['properties']['repost-of'][0]))
-            ? $microformats['items'][0]['properties']['repost-of'][0] : null;
+            ? $microformats['items'][0]['properties']['repost-of'][0]
+            : null;
 
         $date = (isset($microformats['items'][0]['properties']['published'][0]))
-            ? $microformats['items'][0]['properties']['published'][0] : date('Y-m-d H:i:s \U\T\CO');
+            ? $microformats['items'][0]['properties']['published'][0]
+            : date('Y-m-d H:i:s \U\T\CO');
 
         $authorship = new Authorship();
         try {
             $author = $authorship->findAuthor($microformats);
-        } catch (AuthorshipParserException $e) {
+        } catch (AuthorshipParserException $exception) {
             $author = null;
         }
         $authorNorm = $this->normaliseAuthor($author, $domain);
@@ -247,26 +261,26 @@ class Parser
     /**
      * Parse the author data and return a flat array of the pertinent information.
      *
-     * @param  array  The author info
-     * @param  string The source domain
-     *
+     * @param array The author info
+     * @param string|null The source domain
      * @return array Flattened author info
      */
-    protected function normaliseAuthor(array $author, $domain = null)
+    protected function normaliseAuthor(array $author, $domain = null): array
     {
         $authorNorm = ['name' => null, 'url' => null, 'photo' => null];
+
         if ($author !== null) {
-            $authorNorm['name'] = $author['properties']['name'][0];
-            $authorNorm['url'] = $author['properties']['url'][0];
+            $authorNorm['name']  = $author['properties']['name'][0];
+            $authorNorm['url']   = $author['properties']['url'][0];
             $authorNorm['photo'] = $author['properties']['photo'][0];
 
             return $authorNorm;
         }
 
-        //we couldn't find actual authorship data, so fall back to domain
+        // We couldn’t find actual authorship data, so fall back to domain
         if ($domain !== null) {
             $authorNorm['name'] = parse_url($domain)['host'];
-            $authorNorm['url'] = 'http://' . parse_url($domain)['host'];
+            $authorNorm['url']  = 'http://' . parse_url($domain)['host'];
         }
 
         return $authorNorm;

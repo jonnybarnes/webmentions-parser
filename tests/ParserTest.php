@@ -1,11 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 use Jonnybarnes\WebmentionsParser\Exceptions\InvalidMentionException;
 use Jonnybarnes\WebmentionsParser\Parser;
+use PHPUnit\Framework\TestCase;
 
-class ParserTest extends PHPUnit_Framework_TestCase
+class ParserTest extends TestCase
 {
-    private $dir = __DIR__;
+    /** @var string */
+    private $dir;
+
+    public function setUp(): void
+    {
+        $this->dir = __DIR__;
+    }
 
     /**
      * Test determining mention types.
@@ -39,15 +48,12 @@ class ParserTest extends PHPUnit_Framework_TestCase
 
     public function testInvalidMentionType()
     {
+        $this->expectException(InvalidMentionException::class);
+
         $html = file_get_contents($this->dir . '/HTML/testInvalidMentionType.html');
         $parser = new Parser();
         $microformats = $parser->getMicroformats($html, null);
-        try {
-            $parser->getMentionType($microformats);
-        } catch (InvalidMentionException $e) {
-            return;
-        }
-        $this->fail('An expected exception has not been thrown');
+        $parser->getMentionType($microformats);
     }
 
     /**
