@@ -56,8 +56,8 @@ class Authorship
      *
      * @todo work with multiple h-entry's
      *
-     * @param array $mf       The parsed microformats
-     * @param bool $permalink
+     * @param array $mf        The parsed microformats
+     * @param bool  $permalink
      *
      * @throws AuthorshipParserException
      * @throws GuzzleException

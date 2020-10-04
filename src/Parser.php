@@ -197,19 +197,21 @@ class Parser
             : date('Y-m-d H:i:s \U\T\CO');
 
         $authorship = new Authorship();
+
         try {
             $author = $authorship->findAuthor($microformats);
         } catch (AuthorshipParserException $e) {
             $author = null;
         }
+
         $authorNorm = $this->normaliseAuthor($author, $domain);
 
         return [
-            'name' => $authorNorm['name'],
-            'url' => $authorNorm['url'],
+            'name'  => $authorNorm['name'],
+            'url'   => $authorNorm['url'],
             'photo' => $authorNorm['photo'],
             'reply' => $replyHTML,
-            'date' => $date,
+            'date'  => $date,
         ];
     }
 
@@ -226,16 +228,18 @@ class Parser
     public function likeContent(array $microformats, $domain = null): array
     {
         $authorship = new Authorship();
+
         try {
             $author = $authorship->findAuthor($microformats);
         } catch (AuthorshipParserException $exception) {
             $author = null;
         }
+
         $authorNorm = $this->normaliseAuthor($author, $domain);
 
         return [
-            'name' => $authorNorm['name'],
-            'url' => $authorNorm['url'],
+            'name'  => $authorNorm['name'],
+            'url'   => $authorNorm['url'],
             'photo' => $authorNorm['photo'],
         ];
     }
@@ -261,19 +265,21 @@ class Parser
             : date('Y-m-d H:i:s \U\T\CO');
 
         $authorship = new Authorship();
+
         try {
             $author = $authorship->findAuthor($microformats);
         } catch (AuthorshipParserException $exception) {
             $author = null;
         }
+
         $authorNorm = $this->normaliseAuthor($author, $domain);
 
         return [
-            'name' => $authorNorm['name'],
-            'url' => $authorNorm['url'],
-            'photo' => $authorNorm['photo'],
+            'name'   => $authorNorm['name'],
+            'url'    => $authorNorm['url'],
+            'photo'  => $authorNorm['photo'],
             'repost' => $url,
-            'date' => $date,
+            'date'   => $date,
         ];
     }
 
