@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jonnybarnes\WebmentionsParser;
 
 use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use Jonnybarnes\WebmentionsParser\Exceptions\AuthorshipParserException;
 use Jonnybarnes\WebmentionsParser\Exceptions\InvalidMentionException;
 use Jonnybarnes\WebmentionsParser\Exceptions\ParserException;
@@ -18,8 +19,10 @@ class Parser
      *
      * @param string The HTML
      * @param string|null The domain the HTML is from
-     * @return array The parsed microformats
+     *
      * @throws ParserException
+     *
+     * @return array The parsed microformats
      */
     public function getMicroformats(string $html, ?string $domain): array
     {
@@ -36,8 +39,10 @@ class Parser
      * Return the type of mention or throw an error if undetermined.
      *
      * @param array The microformats
-     * @return string The mention type
+     *
      * @throws InvalidMentionException
+     *
+     * @return string The mention type
      */
     public function getMentionType(array $microformats): string
     {
@@ -60,6 +65,7 @@ class Parser
      *
      * @param array The microformats
      * @param string The URL of the target
+     *
      * @return bool
      */
     public function checkInReplyTo(array $microformats, string $target): bool
@@ -90,6 +96,7 @@ class Parser
      *
      * @param array The microformats
      * @param string The target domain
+     *
      * @return bool
      */
     public function checkLikeOf(array $microformats, string $target): bool
@@ -114,6 +121,7 @@ class Parser
      *
      * @param array The microformats
      * @param string The target domain
+     *
      * @return bool
      */
     public function checkRepostOf(array $microformats, string $target): bool
@@ -135,8 +143,10 @@ class Parser
 
     /**
      * Our recursive array_key_exists function.
+     *
      * @param string $needle
-     * @param array $haystack
+     * @param array  $haystack
+     *
      * @return bool
      */
     private function arrayKeyExistsRecursive(string $needle, array $haystack): bool
@@ -165,8 +175,11 @@ class Parser
      *
      * @param array The microformats
      * @param string|null The source domain
-     * @return array The reply content
+     *
+     * @throws GuzzleException
      * @throws ParserException
+     *
+     * @return array The reply content
      */
     public function replyContent(array $microformats, $domain = null): array
     {
@@ -192,11 +205,11 @@ class Parser
         $authorNorm = $this->normaliseAuthor($author, $domain);
 
         return [
-            'name'  => $authorNorm['name'],
-            'url'   => $authorNorm['url'],
+            'name' => $authorNorm['name'],
+            'url' => $authorNorm['url'],
             'photo' => $authorNorm['photo'],
             'reply' => $replyHTML,
-            'date'  => $date,
+            'date' => $date,
         ];
     }
 
@@ -205,6 +218,9 @@ class Parser
      *
      * @param array The microformats
      * @param string|null The source domain
+     *
+     * @throws GuzzleException
+     *
      * @return array The like content
      */
     public function likeContent(array $microformats, $domain = null): array
@@ -218,8 +234,8 @@ class Parser
         $authorNorm = $this->normaliseAuthor($author, $domain);
 
         return [
-            'name'  => $authorNorm['name'],
-            'url'   => $authorNorm['url'],
+            'name' => $authorNorm['name'],
+            'url' => $authorNorm['url'],
             'photo' => $authorNorm['photo'],
         ];
     }
@@ -229,6 +245,9 @@ class Parser
      *
      * @param array The microformats
      * @param string|null The source domain
+     *
+     * @throws GuzzleException
+     *
      * @return array The repost content
      */
     public function repostContent(array $microformats, $domain = null): array
@@ -250,11 +269,11 @@ class Parser
         $authorNorm = $this->normaliseAuthor($author, $domain);
 
         return [
-            'name'   => $authorNorm['name'],
-            'url'    => $authorNorm['url'],
-            'photo'  => $authorNorm['photo'],
+            'name' => $authorNorm['name'],
+            'url' => $authorNorm['url'],
+            'photo' => $authorNorm['photo'],
             'repost' => $url,
-            'date'   => $date,
+            'date' => $date,
         ];
     }
 
@@ -263,6 +282,7 @@ class Parser
      *
      * @param array The author info
      * @param string|null The source domain
+     *
      * @return array Flattened author info
      */
     protected function normaliseAuthor(array $author, $domain = null): array
@@ -270,8 +290,8 @@ class Parser
         $authorNorm = ['name' => null, 'url' => null, 'photo' => null];
 
         if ($author !== null) {
-            $authorNorm['name']  = $author['properties']['name'][0];
-            $authorNorm['url']   = $author['properties']['url'][0];
+            $authorNorm['name'] = $author['properties']['name'][0];
+            $authorNorm['url'] = $author['properties']['url'][0];
             $authorNorm['photo'] = $author['properties']['photo'][0];
 
             return $authorNorm;
@@ -280,7 +300,7 @@ class Parser
         // We couldn’t find actual authorship data, so fall back to domain
         if ($domain !== null) {
             $authorNorm['name'] = parse_url($domain)['host'];
-            $authorNorm['url']  = 'http://' . parse_url($domain)['host'];
+            $authorNorm['url'] = 'http://' . parse_url($domain)['host'];
         }
 
         return $authorNorm;

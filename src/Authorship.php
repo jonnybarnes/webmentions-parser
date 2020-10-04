@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jonnybarnes\WebmentionsParser;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Jonnybarnes\WebmentionsParser\Exceptions\AuthorshipParserException;
 use function Mf2\parse;
 
@@ -55,10 +56,13 @@ class Authorship
      *
      * @todo work with multiple h-entry's
      *
-     * @param array $mf The parsed microformats
+     * @param array $mf       The parsed microformats
      * @param bool $permalink
-     * @return mixed
+     *
      * @throws AuthorshipParserException
+     * @throws GuzzleException
+     *
+     * @return mixed
      */
     public function findAuthor(array $mf, bool $permalink = true)
     {
@@ -197,6 +201,7 @@ class Authorship
      * Normalise the author info.
      *
      * @param array|string $author
+     *
      * @return array|string
      */
     protected function normalise($author)
