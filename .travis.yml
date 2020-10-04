@@ -1,10 +1,11 @@
 language: php
 
+os: linux
+dist: focal
+
 php:
   - 7.3
   - 7.4
-
-sudo: false
 
 # Handle git submodules yourself
 git:
